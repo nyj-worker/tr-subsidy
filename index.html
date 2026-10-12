@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>화물자동차 유가보조금 지원사업 설명서 대시보드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .gradient-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e3a8a 100%);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+
+  <nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-blue-500/20">
+          <i data-lucide="truck" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">남양주시 자동차관리과</span>
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">2026 운수업계 유가보조금 지원 사업설명서</h1>
+        </div>
+      </div>
+      
+      <div class="hidden md:flex items-center space-x-1 text-sm font-medium text-slate-600">
+        <a href="#summary" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors">사업개요</a>
+        <a href="#analytics" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors">집행추이·차트</a>
+        <a href="#flow" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors">재원 및 배분구조</a>
+        <a href="#faq" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors">의회 예상질문(Q&A)</a>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span>
+          제2회 추경 예산안
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="gradient-hero text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute -right-16 -top-16 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute -left-16 -bottom-16 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="max-w-4xl">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-4">
+          화물 운송사업자 유가보조금<br>
+          제2회 추가경정예산 <span class="text-amber-400">27억 원</span> 증액 편성
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          중동 사태로 인한 국내 경유가격 급등에 대응하여 총 지급단가를 493원/L로 인상 개정하였습니다. 하반기 예산 부족분(25.68억 원)을 충당하고 유가 변동성을 방어하기 위해 총 149억 원 예산을 확충합니다.
+        </p>
+      </div>
+
+      <!-- Quick KPI Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-all">
+          <p class="text-xs text-slate-300 font-medium">2026 최종 예산(안)</p>
+          <div class="flex items-baseline space-x-1 mt-1">
+            <span class="text-2xl sm:text-3xl font-black text-white">149억</span>
+            <span class="text-xs text-slate-300">원</span>
+          </div>
+          <span class="text-[11px] text-emerald-400 flex items-center mt-1">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5 mr-0.5"></i> 본예산 대비 +27억 원 (+22.1%)
+          </span>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-all">
+          <p class="text-xs text-slate-300 font-medium">경유 총 지원단가</p>
+          <div class="flex items-baseline space-x-1 mt-1">
+            <span class="text-2xl sm:text-3xl font-black text-amber-300">493.00</span>
+            <span class="text-xs text-slate-300">원/ℓ</span>
+          </div>
+          <span class="text-[11px] text-amber-300 flex items-center mt-1">
+            기존 292.66원에서 +200.34원 인상
+          </span>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-all">
+          <p class="text-xs text-slate-300 font-medium">지원 대상 화물차</p>
+          <div class="flex items-baseline space-x-1 mt-1">
+            <span class="text-2xl sm:text-3xl font-black text-white">5,700</span>
+            <span class="text-xs text-slate-300">대</span>
+          </div>
+          <div class="text-[11px] text-slate-300 mt-1.5 leading-tight break-keep">
+            2027년 본예산에 ‘6300대’로 사업량 조정<br>
+            -&gt; 택배차량 증가 (경유 사용)
+          </div>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-all">
+          <p class="text-xs text-slate-300 font-medium">상반기 지급액 전년대비</p>
+          <div class="flex items-baseline space-x-1 mt-1">
+            <span class="text-2xl sm:text-3xl font-black text-red-400">+44.2%</span>
+            <span class="text-xs text-slate-300">평균 급증</span>
+          </div>
+          <span class="text-[11px] text-rose-300 flex items-center mt-1">
+            하반기 소요 87.85억 대비 잔액 부족
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 flex-1 w-full">
+
+    <!-- Section 1: 3-Minute Summary Cards -->
+    <section id="summary" class="scroll-mt-20">
+      <div class="flex items-center space-x-2 mb-3">
+        <div class="p-2 bg-blue-100 rounded-lg text-blue-700">
+          <i data-lucide="layers" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900">핵심 포인트 3줄 요약</h3>
+          <p class="text-xs text-slate-500">지방보조금 사업설명서의 가장 중요한 골자입니다.</p>
+        </div>
+      </div>
+
+      <!-- Quick Navigation Action Buttons (부정수급 대장 & 유가보조금 관리규정 연결 - 노란색 박스 위치) -->
+      <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-6">
+        <a href="3개년유가보조금부정.html" target="_blank" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-yellow-200 hover:bg-yellow-300 text-blue-700 hover:text-blue-900 font-bold text-xs sm:text-sm rounded-lg border border-yellow-400 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
+          <i data-lucide="file-spreadsheet" class="w-4 h-4 text-blue-600"></i>
+          <span>2024~2026 부정수급</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-blue-500 opacity-70"></i>
+        </a>
+        <a href="유가보조금 관리규정.html" target="_blank" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-amber-400 hover:bg-amber-500 text-slate-900 hover:text-black font-bold text-xs sm:text-sm rounded-lg border border-amber-500 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
+          <i data-lucide="book-open" class="w-4 h-4 text-amber-900"></i>
+          <span>화물자동차 유가보조금 관리규정</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-800 opacity-70"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -z-0"></div>
+          <div class="relative z-10">
+            <span class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs mb-3">1</span>
+            <h4 class="text-base font-bold text-slate-900 mb-2">왜 27억 원을 증액하나요?</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              중동 위기로 기름값이 1,700원/ℓ을 넘어서면서 정부 기준에 따라 <strong>'유가연동보조금'</strong>과 <strong>'추가연동보조금'</strong>이 동시에 발동되어 경유 지급단가가 <strong>리터당 493원</strong>으로 껑충 뛰었기 때문입니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -z-0"></div>
+          <div class="relative z-10">
+            <span class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs mb-3">2</span>
+            <h4 class="text-base font-bold text-slate-900 mb-2">하반기 예산이 얼마나 모자라나요?</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              하반기 예상 지출액은 경유(83.6억)와 LPG(4.2억)를 합쳐 <strong>약 87억 8,500만 원</strong>입니다. 하지만 6월 말 남은 잔액은 <strong>62억 1,700만 원</strong>으로 약 <strong>25억 6,800만 원이 부족</strong>하여 27억 원을 추경 편성했습니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -z-0"></div>
+          <div class="relative z-10">
+            <span class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs mb-3">3</span>
+            <h4 class="text-base font-bold text-slate-900 mb-2">시민 세금 부담이 가중되나요?</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              이 보조금은 일반 시민의 지방세가 아니라 정유업체들이 납부하는 <strong>'자동차세 주행분(지방세)'</strong>을 재원으로 국토교통부 기준에 따라 남양주시로 배분(안분비율 약 0.86%)받아 집행하는 전용 재원 사업입니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 단가 급등 원인 3단계 구조 분석 -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div class="flex items-start sm:items-center space-x-3">
+          <span class="w-8 h-8 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center text-sm shadow-sm shrink-0">
+            01
+          </span>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              왜 보조금 단가가 493원으로 치솟았을까?
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5 font-medium">
+              기존 1단 구조에서 중동 위기로 3단계 누적 구조로 자동 확장
+            </p>
+          </div>
+        </div>
+        <div class="self-start sm:self-auto flex flex-col sm:items-end gap-1.5">
+          <button onclick="openLawModal()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all transform hover:-translate-y-0.5 cursor-pointer">
+            <i data-lucide="scale" class="w-3.5 h-3.5"></i>
+            <span>화물자동차 운수사업법 제43조 제2항</span>
+            <i data-lucide="external-link" class="w-3 h-3 text-blue-200"></i>
+          </button>
+          <button onclick="openRuleModal()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded-full text-xs font-semibold shadow-xs transition-all transform hover:-translate-y-0.5 cursor-pointer group">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-amber-700"></i>
+            <span>「화물자동차 유가보조금 관리규정」 제8조</span>
+            <i data-lucide="external-link" class="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Left: Unit Price Comparison (5 cols) -->
+        <div class="lg:col-span-5 bg-slate-50/70 rounded-2xl p-5 border border-slate-200/70 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-semibold text-slate-500 block mb-4">단가 비교 (원/ℓ)</span>
+
+            <!-- Row 1: Existing Base Price -->
+            <div class="mb-5">
+              <div class="flex justify-between items-center text-xs sm:text-sm font-bold mb-2">
+                <span class="text-slate-800">기존 기본단가 (유류세연동)</span>
+                <span class="text-slate-600 font-mono">292.66원</span>
+              </div>
+              <div class="w-full bg-slate-200/60 rounded-xl h-8 overflow-hidden p-0.5">
+                <div class="h-full bg-slate-400 rounded-lg flex items-center justify-center text-white text-xs font-bold tracking-tight shadow-sm" style="width: 59.4%;">
+                  292.66원
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Revised Total Subsidy Price (3-tier stacked) -->
+            <div class="mb-4">
+              <div class="flex justify-between items-center text-xs sm:text-sm font-bold mb-2">
+                <span class="text-rose-600">개정 총 지원단가 (3단 합산)</span>
+                <span class="text-rose-600 font-mono">493.00원 <span class="text-xs font-semibold">(+200.34원)</span></span>
+              </div>
+              <!-- 3-stage Stacked Bar -->
+              <div class="w-full h-8 flex rounded-xl overflow-hidden shadow-sm font-bold text-xs text-white text-center leading-none select-none">
+                <div class="bg-blue-600 flex items-center justify-center px-1" style="width: 43.2%;" title="1단계 유류세연동: 213.00원">
+                  213원
+                </div>
+                <div class="bg-amber-500 flex items-center justify-center px-1" style="width: 37.2%;" title="2단계 유가연동: 183.21원">
+                  183.21원
+                </div>
+                <div class="bg-rose-500 flex items-center justify-center px-1" style="width: 19.6%;" title="3단계 추가연동: 96.79원">
+                  96.79원
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Notice: LPG -->
+          <div class="bg-white rounded-xl p-3 border border-slate-200/80 flex items-center gap-2 mt-4 shadow-sm">
+            <span class="text-base leading-none">💡</span>
+            <span class="text-[11px] sm:text-xs text-slate-600 font-medium">
+              <strong>LPG 차량의 경우:</strong> 151.57원/ℓ 정액 지원 (유류세 25% 인하분 반영)
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: 3 Tier Cards (7 cols -> 3 cols inside) -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <!-- Tier 1: Blue -->
+          <div class="bg-blue-50/50 border border-blue-200/80 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-300 transition-colors">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-md text-[11px] font-bold">1단계 기본</span>
+                <i data-lucide="droplet" class="w-4 h-4 text-blue-500"></i>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1.5">유류세연동 보조금</h4>
+              <p class="text-[11px] text-slate-600 leading-relaxed break-keep">
+                유류세 25% 인하에 맞춰 법정 기준액(345.54원)에서 조정된 기본 보조금
+              </p>
+            </div>
+            <div class="border-t border-blue-100/80 pt-3 mt-4">
+              <span class="text-[11px] text-slate-400 font-medium block">지원단가</span>
+              <div class="text-lg font-black text-blue-700 font-mono tracking-tight mt-0.5">
+                213.00<span class="text-xs font-semibold ml-0.5 text-blue-600">원</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier 2: Amber -->
+          <div class="bg-amber-50/50 border border-amber-200/80 rounded-2xl p-4 flex flex-col justify-between hover:border-amber-300 transition-colors">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded-md text-[11px] font-bold">2단계 연동</span>
+                <i data-lucide="trending-up" class="w-4 h-4 text-amber-500"></i>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1.5">유가연동 보조금</h4>
+              <p class="text-[11px] text-slate-600 leading-relaxed break-keep">
+                기준가 1,700원 초과분의 70% 지원
+              </p>
+              <span class="text-[10.5px] text-amber-800/80 font-mono block mt-0.5">
+                (경유가-1,700)×70%
+              </span>
+            </div>
+            <div class="border-t border-amber-100/80 pt-3 mt-4">
+              <span class="text-[11px] text-slate-400 font-medium block">최대 한도</span>
+              <div class="text-lg font-black text-amber-600 font-mono tracking-tight mt-0.5">
+                +183.21<span class="text-xs font-semibold ml-0.5 text-amber-600">원</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier 3: Rose -->
+          <div class="bg-rose-50/50 border border-rose-200/80 rounded-2xl p-4 flex flex-col justify-between hover:border-rose-300 transition-colors">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2 py-0.5 bg-rose-100 text-rose-800 rounded-md text-[11px] font-bold">3단계 비상</span>
+                <i data-lucide="zap" class="w-4 h-4 text-rose-500"></i>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1.5">추가연동 보조금</h4>
+              <p class="text-[11px] text-slate-600 leading-relaxed break-keep">
+                초고유가 비상 대응 한시 지원
+              </p>
+              <span class="text-[10.5px] text-rose-800/80 font-mono block mt-0.5">
+                (경유가-1,961.73)×70%
+              </span>
+            </div>
+            <div class="border-t border-rose-100/80 pt-3 mt-4">
+              <span class="text-[11px] text-slate-400 font-medium block">최대 한도</span>
+              <div class="text-lg font-black text-rose-600 font-mono tracking-tight mt-0.5">
+                +96.79<span class="text-xs font-semibold ml-0.5 text-rose-600">원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-section: 최근 지급단가 변경 및 예산집행 현황 테이블 -->
+      <div class="mt-6 pt-6 border-t border-slate-200/80">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
+          <h4 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
+            <i data-lucide="table" class="w-4 h-4 text-amber-600"></i>
+            유가보조금 예산 집행 현황 및 지급단가 변경 내역
+          </h4>
+          <span class="text-[11px] text-slate-500 font-medium">(단위: 백만 원)</span>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm bg-white">
+          <table class="w-full text-xs text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100/90 border-b border-slate-300 text-slate-800 font-bold">
+                <th class="py-2.5 px-3 text-center w-24 border-r border-slate-300">구분</th>
+                <th class="py-2.5 px-3 text-center w-24 border-r border-slate-300">예산액</th>
+                <th class="py-2.5 px-3 text-center w-24 border-r border-slate-300">지출액</th>
+                <th class="py-2.5 px-3 text-center w-24 border-r border-slate-300">잔액</th>
+                <th class="py-2.5 px-4 text-center">비고 (지급단가 변경 내역)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-300 text-slate-800">
+              <!-- Row 1: 2025 -->
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-3 text-center font-bold text-slate-900 border-r border-slate-300">2025</td>
+                <td class="py-3 px-3 text-center font-mono font-medium border-r border-slate-300">12,200</td>
+                <td class="py-3 px-3 text-center font-mono font-medium border-r border-slate-300">9,236</td>
+                <td class="py-3 px-3 text-center font-mono font-medium border-r border-slate-300 text-slate-600">2,964</td>
+                <td class="py-2.5 px-4 space-y-2 leading-relaxed">
+                  <div>
+                    <span class="font-medium text-slate-800">2025. 5. 1. 지급단가 변경</span><br>
+                    <span class="text-slate-600 font-mono text-[11.5px]">경유 : 266.58원/ℓ , LPG : 170.4원/ℓ</span>
+                  </div>
+                  <div class="bg-yellow-200 text-slate-950 px-2.5 py-1.5 rounded border border-yellow-400 inline-block w-full">
+                    <span class="font-bold">2025. 11. 1. 지급단가 변경</span><br>
+                    <span class="font-bold font-mono text-[11.5px]">경유 : 292.66원/ℓ , LPG : 179.47원/ℓ</span>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 2: 2026. 7. -->
+              <!-- Row 2: 2026. 7. (서민 부담 완화 주석 및 지급단가 변경 상세 내역) -->
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td rowspan="2" class="py-3 px-3 text-center font-bold text-slate-900 border-r border-slate-300 align-middle">2026. 7.</td>
+                <td colspan="3" class="pt-3 pb-1 px-3 border-r border-slate-300 align-top">
+                  <div class="flex items-center justify-between">
+                    <span class="text-blue-600 font-semibold text-[11.5px] whitespace-nowrap">* 서민 부담 완화 : 정부에서 유류세 인하</span>
+                    <!-- 오른쪽 경유 단가 박스를 가리키는 빨간 화살표 -->
+                    <span class="text-red-500 font-bold flex items-center shrink-0 ml-1">
+                      <svg class="w-6 h-3 text-red-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <line x1="2" y1="12" x2="19" y2="12"></line>
+                        <polyline points="13 6 19 12 13 18"></polyline>
+                      </svg>
+                    </span>
+                  </div>
+                </td>
+                <td rowspan="2" class="py-2.5 px-4 space-y-2.5 leading-relaxed align-middle">
+                  <div>
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      <span class="bg-yellow-200 px-1.5 py-0.5 rounded font-bold border border-yellow-400 text-slate-950">2026. 3. 27.</span>
+                      <span class="text-slate-800 font-medium">지급단가 변경</span>
+                      <span class="text-red-600 font-bold text-[11px] sm:text-xs">※ 2026. 3. 20. 비상경제장관회의(2026. 3. 11.) 결과에 따른 유류비 재정지원 확대</span>
+                    </div>
+                    <div class="mt-1 flex flex-wrap items-center gap-1 text-[11.5px]">
+                      <span class="border border-red-500 rounded px-1 py-0.5 font-bold text-slate-900 bg-red-50/20">경유 : 213원/ℓ</span><span class="text-slate-700 font-mono">, LPG : 179.47원/ℓ</span>
+                      <span class="text-blue-600 font-semibold ml-1">(2026.04.01. 경유가 :1,900원 - 유가보조금 : 경유 393원 지원(213원 +180원)</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      <span class="bg-yellow-200 px-1.5 py-0.5 rounded font-bold border border-yellow-400 text-slate-950">2026. 5. 1.</span>
+                      <span class="text-slate-800 font-medium">지급단가 변경</span>
+                      <span class="text-red-600 font-bold text-[11px] sm:text-xs">※ 2026. 6. 12. 자원안보 위기경보 발령에 따른 유류 비용에 대한 재정 지원 확대</span>
+                    </div>
+                    <div class="mt-1 flex flex-wrap items-center gap-1 text-[11.5px]">
+                      <span class="text-slate-700 font-mono">경유 : 213원/ℓ , LPG : 151.57원/ℓ</span>
+                      <span class="text-blue-600 font-semibold ml-1">(2026.07.01. 경유가 : 2,005원 - 유가보조금 : 426.5원 지원 (213원 +183.21원</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 2 하단: 예산액, 지출액, 잔액 숫자 행 -->
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="pb-3 pt-1 px-3 text-center font-mono font-medium border-r border-slate-300">12,200</td>
+                <td class="pb-3 pt-1 px-3 text-center font-mono font-medium border-r border-slate-300">5,983</td>
+                <td class="pb-3 pt-1 px-3 text-center font-mono font-bold text-rose-600 border-r border-slate-300">6,217</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="analytics" class="scroll-mt-20">
+      <div class="flex items-center space-x-2 mb-6">
+        <div class="p-2 bg-indigo-100 rounded-lg text-indigo-700">
+          <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900">유가보조금 집행 추이 및 예산 분석</h3>
+          <p class="text-xs text-slate-500">2024~2026 월별 지출액 비교 및 연도별 예산 대비 지출 현황 데이터입니다.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Monthly Trend Chart (7 cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h4 class="font-bold text-slate-800 text-sm">2024 ~ 2026 월별 보조금 지출 추이 비교</h4>
+                <p class="text-xs text-slate-400">2026. 3.부터 유가연동보조금 본격 발생으로 급상승</p>
+              </div>
+              <span class="text-xs font-semibold px-2 py-1 bg-red-50 text-red-600 rounded border border-red-100">
+                25년 대비 상반기 평균 +44.18%
+              </span>
+            </div>
+            <div class="relative h-60 sm:h-64 w-full">
+              <canvas id="monthlyTrendChart"></canvas>
+            </div>
+          </div>
+
+          <!-- 6월 집행내역 요약 및 세부 표 -->
+          <div class="mt-4 pt-3 border-t border-slate-100 space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between text-xs text-slate-600 gap-2">
+              <span>• 2026년 6월 지출액: <strong class="text-rose-600">11억 4,557만 원</strong> (전년동월 대비 +41.13%)</span>
+              <span>• 6월 말 누계 지출: <strong>59억 8,271만 원</strong></span>
+            </div>
+
+            <!-- 노란색 박스 6월 세부 현황 미니 테이블 -->
+            <div class="overflow-x-auto rounded-lg border border-yellow-300 bg-yellow-50/70 p-2 text-[11px]">
+              <div class="flex items-center justify-between font-bold text-slate-800 mb-1 px-1">
+                <span class="flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  6월 유가보조금 세부 집행 실적
+                </span>
+                <span class="text-[10px] text-slate-500 font-normal">(단위: 원)</span>
+              </div>
+              <table class="w-full text-center border-collapse bg-white rounded border border-yellow-200">
+                <thead>
+                  <tr class="bg-yellow-100/80 text-slate-700 font-semibold border-b border-yellow-200">
+                    <th class="py-1 px-2 border-r border-yellow-200">월별</th>
+                    <th class="py-1 px-2 border-r border-yellow-200">2024년</th>
+                    <th class="py-1 px-2 border-r border-yellow-200">2025년</th>
+                    <th class="py-1 px-2 border-r border-yellow-200 text-rose-600 font-bold">2026년</th>
+                    <th class="py-1 px-2 text-rose-600 font-bold">2025 대비 증가율</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-yellow-100 text-slate-800 font-mono">
+                  <tr class="hover:bg-yellow-50/50 transition-colors">
+                    <td class="py-1.5 px-2 font-bold font-sans text-slate-900 border-r border-yellow-200">6월</td>
+                    <td class="py-1.5 px-2 text-slate-600 border-r border-yellow-200">468,736,720</td>
+                    <td class="py-1.5 px-2 text-slate-600 border-r border-yellow-200">811,724,080</td>
+                    <td class="py-1.5 px-2 font-bold text-rose-600 border-r border-yellow-200">1,145,570,020</td>
+                    <td class="py-1.5 px-2 font-bold text-red-600">+41.13%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Annual Budget vs Expenditure (5 cols) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="font-bold text-slate-800 text-sm">연도별 예산액 vs 지출액 추이 (단위: 억 원)</h4>
+              <span class="text-xs text-slate-400 font-mono">2022 ~ 2026</span>
+            </div>
+            <div class="relative h-64 sm:h-72 w-full">
+              <canvas id="annualBudgetChart"></canvas>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500">
+            <p><strong>💡 예산 구조 특징:</strong> 2023~2024년엔 유류세 인하로 잔액이 다수 남았으나, 2026년은 단가 급등으로 122억 본예산이 7월 기점으로 조기 소진 위기입니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget Math Breakdown Box -->
+      <div class="mt-6 bg-blue-50/60 border border-blue-200 rounded-2xl p-6">
+        <h4 class="text-sm font-bold text-blue-900 flex items-center gap-2 mb-3">
+          <i data-lucide="file-spreadsheet" class="w-4 h-4 text-blue-600"></i>
+          2026년도 하반기 부족액 25억 6,800만 원 산출 내역
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div class="bg-white p-3.5 rounded-xl border border-blue-100">
+            <span class="text-slate-500 font-medium block">① 경유 차량 하반기 소요</span>
+            <span class="text-base font-bold font-mono text-slate-800 mt-1 block">83억 6,226만 원</span>
+            <span class="text-[11px] text-slate-400">2,827,000ℓ × 493원 × 6개월</span>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-blue-100">
+            <span class="text-slate-500 font-medium block">② LPG 차량 하반기 소요</span>
+            <span class="text-base font-bold font-mono text-slate-800 mt-1 block">4억 2,279만 원</span>
+            <span class="text-[11px] text-slate-400">464,907ℓ × 151.57원 × 6개월</span>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-blue-100">
+            <span class="text-slate-500 font-medium block">③ 하반기 총 집행예상액</span>
+            <span class="text-base font-bold font-mono text-blue-700 mt-1 block">87억 8,506만 원</span>
+            <span class="text-[11px] text-slate-400">경유 + LPG 합산액</span>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-red-200 bg-red-50/30">
+            <span class="text-red-600 font-bold block">④ 잔액(62.17억) 차감 후 부족분</span>
+            <span class="text-base font-black font-mono text-red-600 mt-1 block">▲ 25억 6,777만 원</span>
+            <span class="text-[11px] text-red-500 font-semibold">→ 유가변동성 고려 27억 추경 반영</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="flow" class="scroll-mt-20">
+      <div class="flex items-center space-x-2 mb-6">
+        <div class="p-2 bg-emerald-100 rounded-lg text-emerald-700">
+          <i data-lucide="git-merge" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900">재원 조달 및 교부 프로세스 (자동차세 주행분)</h3>
+          <p class="text-xs text-slate-500">정유사 납부 세금부터 지자체 화물차주 지원까지의 투명한 자금 흐름도</p>
+        </div>
+      </div>
+
+      <!-- Flowchart Steps -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+          
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 relative group hover:bg-slate-100 transition-colors">
+            <div class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs mb-3">STEP 1</div>
+            <h5 class="text-sm font-bold text-slate-800 mb-1">정유사·수입업자 신고납부</h5>
+            <p class="text-xs text-slate-600">
+              SK, S-OIL, 현대오일뱅크, GS칼텍스 등 특별징수의무자가 공장 소재지(울산, 서산, 여수 등)에 주행세 납부
+            </p>
+            <span class="inline-block mt-2 text-[10px] text-blue-600 font-semibold">매월 말일까지</span>
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 relative group hover:bg-slate-100 transition-colors">
+            <div class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs mb-3">STEP 2</div>
+            <h5 class="text-sm font-bold text-slate-800 mb-1">국토부 소요액 심사조정</h5>
+            <p class="text-xs text-slate-600">
+              전국 시·군이 1년 소요액과 예상액을 제출(2월, 10월)하면 국토부가 전국 지자체 안분비율 확정(4월, 11월)
+            </p>
+            <span class="inline-block mt-2 text-[10px] text-amber-600 font-semibold">남양주시 비율: 0.86%</span>
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 relative group hover:bg-slate-100 transition-colors">
+            <div class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs mb-3">STEP 3</div>
+            <h5 class="text-sm font-bold text-slate-800 mb-1">울산시 → 전국 지자체 송금</h5>
+            <p class="text-xs text-slate-600">
+              주된 특별징수지인 울산시가 국토부 안분비율에 맞춰 매월 전국 시·군으로 안분액 송금
+            </p>
+            <span class="inline-block mt-2 text-[10px] text-indigo-600 font-semibold">매월 정기 송금</span>
+          </div>
+
+          <div class="bg-blue-50 rounded-xl p-4 border border-blue-200 relative group">
+            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs mb-3">STEP 4</div>
+            <h5 class="text-sm font-bold text-blue-900 mb-1">화물차주 보조금 카드 지급</h5>
+            <p class="text-xs text-blue-800">
+              화물차주가 주유 시 화물복지카드를 결제하면 보조금 단가만큼 자동차감 및 카드사에 시 예산 집행
+            </p>
+            <span class="inline-block mt-2 text-[10px] text-emerald-700 font-semibold">관내 5,700대 대상</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fleet Breakdown Table & Tonnage Caps -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Fleet composition (5 cols) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center justify-between">
+            <span>남양주시 화물자동차 등록 현황</span>
+            <span class="text-xs font-normal text-slate-500">기준: 2026. 7월초</span>
+          </h4>
+          <div class="space-y-2.5 text-xs">
+            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg">
+              <span class="font-medium text-slate-700">개인 소형 (1.5톤 이하 용달 등)</span>
+              <span class="font-bold font-mono text-slate-900">2,838대 (38.1%)</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg">
+              <span class="font-medium text-slate-700">개인 택배 화물차</span>
+              <span class="font-bold font-mono text-slate-900">1,965대 (26.4%)</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg">
+              <span class="font-medium text-slate-700">개인 중·대형 (1.5톤 초과)</span>
+              <span class="font-bold font-mono text-slate-900">1,511대 (20.3%)</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 bg-blue-50/60 rounded-lg border border-blue-100">
+              <span class="font-medium text-blue-900">개인화물 소계</span>
+              <span class="font-bold font-mono text-blue-700">6,314대 (84.9%)</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg">
+              <span class="font-medium text-slate-700">일반화물자동차 (20대 이상 법인 등)</span>
+              <span class="font-bold font-mono text-slate-900">1,126대 (15.1%)</span>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-slate-900 text-white rounded-lg font-bold">
+              <span>관내 사업용 화물차 합계</span>
+              <span class="font-mono text-amber-300">7,440대 (100%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legal Limit Table (7 cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm overflow-x-auto">
+          <h4 class="font-bold text-slate-800 text-sm mb-3">최대적재량별 법정 월 한도량 기준표</h4>
+          <table class="w-full text-xs text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-semibold">
+                <th class="py-2.5 px-3">최대 적재량</th>
+                <th class="py-2.5 px-3">경유 한도(ℓ)</th>
+                <th class="py-2.5 px-3">LPG 한도(ℓ)*</th>
+                <th class="py-2.5 px-3 text-right">경유 월 최대지원액</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-mono">
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-sans font-medium text-slate-800">1톤 이하 (소형)</td>
+                <td class="py-2 px-3">683 ℓ</td>
+                <td class="py-2 px-3">1,024 ℓ</td>
+                <td class="py-2 px-3 text-right font-bold text-blue-600">336,719원</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-sans font-medium text-slate-800">3톤 이하</td>
+                <td class="py-2 px-3">1,014 ℓ</td>
+                <td class="py-2 px-3">1,521 ℓ</td>
+                <td class="py-2 px-3 text-right font-bold text-blue-600">499,902원</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-sans font-medium text-slate-800">5톤 이하</td>
+                <td class="py-2 px-3">1,547 ℓ</td>
+                <td class="py-2 px-3">2,320 ℓ</td>
+                <td class="py-2 px-3 text-right font-bold text-blue-600">762,671원</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-sans font-medium text-slate-800">8톤 이하</td>
+                <td class="py-2 px-3">2,220 ℓ</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">-</td>
+                <td class="py-2 px-3 text-right font-bold text-blue-600">1,094,460원</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-sans font-medium text-slate-800">10톤 이하</td>
+                <td class="py-2 px-3">2,700 ℓ</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">-</td>
+                <td class="py-2 px-3 text-right font-bold text-blue-600">1,331,100원</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-sans font-medium text-slate-800">12톤 이하</td>
+                <td class="py-2 px-3">3,059 ℓ</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">-</td>
+                <td class="py-2 px-3 text-right font-bold text-blue-600">1,508,087원</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80 bg-blue-50/30">
+                <td class="py-2 px-3 font-sans font-bold text-blue-900">12톤 초과</td>
+                <td class="py-2 px-3 font-bold text-slate-900">4,308 ℓ</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">-</td>
+                <td class="py-2 px-3 text-right font-bold text-blue-700">2,123,844원</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="text-[11px] text-slate-400 mt-2">* LPG 차량은 연비 차이를 감안하여 경유 한도량의 150%(1.5배)를 가산 적용합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="scroll-mt-20">
+      <div class="flex items-center space-x-2 mb-6">
+        <div class="p-2 bg-purple-100 rounded-lg text-purple-700">
+          <i data-lucide="help-circle" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900">시의회·예결위 예상 질문 및 모범 답변 (Q&A)</h3>
+          <p class="text-xs text-slate-500">예산 심의 시 의원들이 질의하기 쉬운 핵심 쟁점과 명쾌한 답변 논리입니다.</p>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Q1 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <button onclick="toggleFaq('faq-1')" class="w-full text-left px-6 py-4 flex items-center justify-between bg-slate-50/60 hover:bg-slate-100/80 transition-colors">
+            <span class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-3">
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-black">Q1</span>
+              작년(2025년)에는 예산이 약 30억 원이나 남았는데, 왜 올해는 모자라 증액하나요?
+            </span>
+            <i id="faq-1-icon" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+          </button>
+          <div id="faq-1-body" class="px-6 py-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
+            <p class="font-medium text-slate-800 mb-2">
+              <strong>A. 지원단가 차이 때문입니다.</strong>
+            </p>
+            <p>
+              2025년도 예산 122억 원은 유류세 인하 전 법정 기준액인 345.54원/ℓ 기준으로 편성하였으나, 정부의 유류세 인하 정책에 따라 지급단가가 <strong>292.66원/ℓ으로 축소</strong> 적용되어 지출 잔액(약 29.6억 원)이 남았습니다.<br>
+              반면, 2026년에는 중동 사태 발발로 유가가 1,700원을 초과하여 <strong>유가연동보조금과 추가연동보조금이 동시 발동(총 493원/ℓ)</strong>되어 지출 속도가 전년 대비 44% 이상 급증했기 때문에 불가피하게 추경 편성이 필요합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <button onclick="toggleFaq('faq-2')" class="w-full text-left px-6 py-4 flex items-center justify-between bg-slate-50/60 hover:bg-slate-100/80 transition-colors">
+            <span class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-3">
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-black">Q2</span>
+              유가연동보조금으로 변동성이 크다면 다음 연도(2027년) 본예산에 미리 많이 잡으면 안 되나요?
+            </span>
+            <i id="faq-2-icon" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+          </button>
+          <div id="faq-2-body" class="px-6 py-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
+            <p class="font-medium text-slate-800 mb-2">
+              <strong>A. 본예산 과다 편성은 불용액을 초래하므로 기본 단가 편성 원칙이 합리적입니다.</strong>
+            </p>
+            <p>
+              국제 유가와 전쟁 같은 지정학적 위기는 사전 예측이 원천적으로 불가능합니다. 
+              유가가 다시 정상화될 경우 대규모 불용액(미집행 잔액)이 발생하여 시 재정 효율성을 해칠 수 있습니다. 
+              따라서 본예산은 법정 유가보조금 기준인 <strong>345.54원/ℓ(통상 122억 원 규모)</strong>에 맞춰 표준적으로 편성하고, 
+              급격한 시장 이상징후 발생 시 <strong>추경을 통해 탄력적으로 대응</strong>하는 것이 지방재정 운영 원칙에 부합합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <button onclick="toggleFaq('faq-3')" class="w-full text-left px-6 py-4 flex items-center justify-between bg-slate-50/60 hover:bg-slate-100/80 transition-colors">
+            <span class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-3">
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-black">Q3</span>
+              이번 보조금 사업자 선정에서 '공모 제외'된 사유는 무엇인가요?
+            </span>
+            <i id="faq-3-icon" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+          </button>
+          <div id="faq-3-body" class="px-6 py-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 leading-relaxed hidden">
+            <p class="font-medium text-slate-800 mb-2">
+              <strong>A. 「지방보조금법」 제7조 제2항 제1호에 따른 법정 의무지출 성격이기 때문입니다.</strong>
+            </p>
+            <p>
+              화물자동차 유가보조금은 특정 단체를 선정해 지원하는 공모사업이 아니라, 「화물자동차 운수사업법」 제43조 제2항에 의거하여 <strong>허가받은 사업용 화물차 차주에게 주행량에 비례해 법적으로 지급하도록 정해진 법정 보조금</strong>입니다. 따라서 공모 절차 대상에서 적법하게 제외됩니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <button onclick="toggleFaq('faq-4')" class="w-full text-left px-6 py-4 flex items-center justify-between bg-slate-50/60 hover:bg-slate-100/80 transition-colors">
+            <span class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-3">
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-black">Q4</span>
+              전체 허가대수(7,440대)와 실제 사업량(5,700대)에 약 1,740대의 격차가 발생하는 원인은?
+            </span>
+            <i id="faq-4-icon" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform rotate-180"></i>
+          </button>
+          <div id="faq-4-body" class="px-6 py-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
+            <p class="font-medium text-slate-800 mb-2">
+              <strong>답변:</strong>
+            </p>
+            <p class="mb-3">
+              화물 운송사업 허가증을 보유하고 있더라도 다음의 사유로 실제 유가보조금 수혜를 받지 못하거나 청구하지 않는 차량들이 존재하기 때문입니다:
+            </p>
+            <ul class="space-y-2 text-slate-700">
+              <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>전기·친환경 화물차 전환:</strong> 신규 허가 및 대폐차 과정에서 전기화물차로 등록한 차량(전기차 보조금 대상이며 유류보조금 미지급)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>유류구매카드 미발급:</strong> 신용등급 불량 등으로 인한 카드 발급 불가, 휴폐업 또는 차량 양도양수 대기 중인 차량</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>휴지 및 유휴 차량:</strong> 차량은 등록되어 있으나 실제 영업 운행 및 주유 실적이 없는 차량</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-700">
+          <i data-lucide="phone-call" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="font-bold text-slate-800 block text-sm">소관부서 업무담당</span>
+          <span>남양주시청 자동차관리과 화물팀 (과장 고경희 / 팀장 유종형)</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="copySummaryText()" class="inline-flex items-center space-x-1.5 px-4 py-2 rounded-lg bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors">
+          <i data-lucide="copy" class="w-4 h-4"></i>
+          <span>보고 요약문 복사</span>
+        </button>
+        <button onclick="window.print()" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg border border-slate-300 hover:bg-slate-50 transition-colors font-medium">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>인쇄하기</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Law Modal (화물자동차 운수사업법 제43조 제2항) -->
+  <div id="lawModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5" onclick="if(event.target === this) closeLawModal()">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden border border-slate-200">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+            <i data-lucide="scale" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-slate-900">화물자동차 운수사업법 제43조 (재정지원)</h4>
+            <p class="text-[11px] text-slate-500 font-medium">유가보조금 지급의 상위 모법 근거 조항 [시행 2026. 7. 1.]</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <a href="https://www.law.go.kr/법령/화물자동차운수사업법/(20260701,21711,20260529)/제43조" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors">
+            <span>국가법령정보센터 원문</span>
+            <i data-lucide="external-link" class="w-3 h-3 text-slate-400"></i>
+          </a>
+          <button onclick="closeLawModal()" type="button" class="w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors flex items-center justify-center cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 sm:p-7 overflow-y-auto flex-1 space-y-4 text-slate-800">
+        <!-- 국가법령정보센터 공식 서식 뷰어 (이미지 100% 재현) -->
+        <div class="bg-white border border-slate-300 rounded-2xl p-5 sm:p-7 shadow-sm font-sans leading-relaxed text-[13px] sm:text-[14px]">
+          <!-- 법령 헤더 -->
+          <div class="text-center pb-5 mb-5 border-b border-slate-200">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+              화물자동차 운수사업법 <span class="text-xs sm:text-sm font-normal text-slate-500">( 약칭: 화물자동차법 )</span>
+            </h3>
+            <p class="text-xs text-cyan-800 font-medium mt-1">
+              [시행 2026. 7. 1.] [법률 제21711호, 2026. 5. 29., 일부개정]
+            </p>
+          </div>
+
+          <!-- 조문 본문 -->
+          <div class="space-y-4 text-slate-700 leading-relaxed">
+            <!-- 제1항 -->
+            <div class="relative pl-1">
+              <div class="flex items-start gap-1.5 mb-1.5">
+                <span class="inline-flex items-center px-1 py-0.2 border border-emerald-500 text-emerald-600 rounded text-[10px] font-bold leading-tight shrink-0">판</span>
+                <span class="inline-flex items-center px-1 py-0.2 border border-amber-500 text-amber-600 rounded text-[10px] font-bold leading-tight shrink-0">연</span>
+                <span class="inline-block w-3 h-3 border border-slate-400 rounded-xs shrink-0 mt-0.5"></span>
+                <p class="text-slate-800 leading-normal">
+                  <strong class="text-slate-900 font-bold">제43조(재정지원)</strong> ① 국가는 지방자치단체, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「공공기관의 운영에 관한 법률」</a>에 따른 공공기관 중 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">대통령령</a>으로 정하는 공공기관, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「지방공기업법」</a>에 따른 지방공사, 사업자단체 또는 운수사업자가 다음 각 호의 어느 하나에 해당하는 사업을 수행하는 경우로서 재정적 지원이 필요하다고 인정되면 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">대통령령</a>으로 정하는 바에 따라 <mark class="bg-yellow-300 text-slate-900 px-1 py-0.5 font-semibold rounded-xs">소요자금의 일부를 보조하거나 융자</mark>할 수 있다. <span class="text-slate-400 text-xs">&lt;개정 2011. 6. 15., 2013. 3. 23., 2020. 6. 9.&gt;</span>
+                </p>
+              </div>
+
+              <div class="pl-6 space-y-1 text-slate-600 text-[12.5px] sm:text-[13px]">
+                <div class="flex items-center gap-1.5 -ml-6 mb-1">
+                  <span class="inline-flex items-center px-1 py-0.2 border border-blue-500 text-blue-600 rounded text-[10px] font-bold leading-tight">규</span>
+                </div>
+                <p>1. 공동차고지 및 공영차고지 건설</p>
+                <p>2. 화물자동차 운수사업의 정보화</p>
+                <p>3. 낡은 차량의 대체</p>
+                <p>4. 연료비가 절감되거나 환경친화적인 화물자동차 등으로의 전환 및 이를 위한 시설ㆍ장비의 투자</p>
+                <p>5. 화물자동차 휴게소의 건설</p>
+                <p>6. 화물자동차 운수사업의 서비스 향상을 위한 시설ㆍ장비의 확충과 개선</p>
+                <p>7. 그 밖에 화물자동차 운수사업의 경영합리화를 위한 사항으로서 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">국토교통부령</a>으로 정하는 사항</p>
+              </div>
+            </div>
+
+            <!-- 제2항 (핵심 근거) -->
+            <div class="pt-2 border-t border-slate-100">
+              <p class="text-slate-800 leading-normal mb-2">
+                ② 시ㆍ도지사, 시장 또는 군수(광역시의 군수를 포함한다. 이하 이 조, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제44조</a>, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제44조의2</a> 및 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제60조의2</a>에서 같다)는 운송사업자, 운송가맹사업자 및 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제40조제1항</a>에 따라 화물자동차 운송사업을 위탁받은 자(이하 이 조, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제44조</a> 및 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제44조의2</a>에서 "운송사업자등"이라 한다)에게 다음 각 호의 어느 하나에 해당하는 금액의 전부 또는 일부를 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">대통령령</a>으로 정하는 바에 따라 보조할 수 있다. <span class="text-slate-400 text-xs">&lt;개정 2010. 3. 31., 2011. 6. 15., 2012. 6. 1., 2013. 3. 23., 2015. 6. 22., 2021. 4. 13., 2026. 5. 29.&gt;</span>
+              </p>
+
+              <!-- 제1호 (노란색 박스 하이라이트) -->
+              <div class="my-2 p-2 bg-yellow-300/90 rounded border border-yellow-400/80 font-bold text-slate-900 text-[13px] sm:text-[14px]">
+                1. 유류(油類)에 부과되는 다음 각 목의 세액 등의 인상액에 상응하는 금액
+              </div>
+              <div class="pl-5 space-y-1.5 text-slate-700 text-[12.5px] sm:text-[13px] mb-3">
+                <p>
+                  가. <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「교육세법」 제5조제1항</a>, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「교통ㆍ에너지ㆍ환경세법」 제2조제1항제2호</a>, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「지방세법」 제136조제1항</a>에 따라 경유에 각각 부과되는 교육세, 교통ㆍ에너지ㆍ환경세, 자동차세
+                </p>
+                <p>
+                  나. <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「개별소비세법」 제1조제2항제4호바목</a>, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「교육세법」 제5조제1항</a>, <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「석유 및 석유대체연료 사업법」 제18조제2항제1호</a>에 따라 석유가스 중 부탄에 각각 부과되는 개별소비세ㆍ교육세ㆍ부과금
+                </p>
+              </div>
+
+              <!-- 제2호 (노란색 박스 하이라이트) -->
+              <div class="my-2 p-2 bg-yellow-300/90 rounded border border-yellow-400/80 font-bold text-slate-900 text-[13px] sm:text-[14px]">
+                2. <a href="https://www.law.go.kr" target="_blank" class="text-blue-700 underline hover:text-blue-900">「국가자원안보 특별법」 제23조</a>에 따른 자원안보위기 경보가 발령된 경우 운송사업자들이 화물자동차를 운행하기 위하여 구매하는 유류의 구매 비용
+              </div>
+            </div>
+
+            <!-- 제3항 -->
+            <div class="pt-2 border-t border-slate-100">
+              <p class="text-slate-800 leading-normal">
+                ③ 특별시장ㆍ광역시장ㆍ특별자치시장ㆍ특별자치도지사ㆍ시장 또는 군수는 운송사업자등이 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">「환경친화적 자동차의 개발 및 보급 촉진에 관한 법률」 제2조제6호</a>에 따른 수소전기자동차를 운행하기 위하여 수소를 구매하는 경우 그 비용의 전부 또는 일부를 <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">대통령령</a>으로 정하는 바에 따라 보조할 수 있다. <span class="text-slate-400 text-xs">&lt;신설 2021. 4. 13.&gt;</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 실무 해설 및 연계 법령 안내 배너 -->
+        <div class="bg-blue-50/80 border border-blue-200 rounded-xl p-3.5 flex items-start gap-2.5">
+          <i data-lucide="info" class="w-4 h-4 text-blue-600 shrink-0 mt-0.5"></i>
+          <div class="text-xs text-slate-700 space-y-1">
+            <p class="font-bold text-blue-950">💡 남양주시 유가보조금 지원사업과의 직접적인 연계</p>
+            <p>• <strong>제2항 제1호:</strong> 유류세 인상에 따른 '유류세연동보조금(기본단가 213원/ℓ)' 지급의 법적 근거입니다.</p>
+            <p>• <strong>제2항 제2호:</strong> 최근 중동 사태 등 자원안보위기 경보 발령 시 '유가연동보조금' 및 '추가연동보조금'을 추가 지원하여 총 493원/ℓ까지 지원할 수 있는 핵심 근거 조항입니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+        <span>출처: 대한민국 법제처 국가법령정보센터 (law.go.kr)</span>
+        <button onclick="closeLawModal()" type="button" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-semibold transition-colors cursor-pointer">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rule Modal (화물자동차 유가보조금 관리규정 제8조) -->
+  <div id="ruleModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5" onclick="if(event.target === this) closeRuleModal()">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden border border-slate-200">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-amber-50/70">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-slate-900">「화물자동차 유가보조금 관리규정」 제8조</h4>
+            <p class="text-[11px] text-slate-500 font-medium">유가보조금 지급단가 산정 고시 [국토교통부고시 제2026-384호, 시행 2026. 7. 16.]</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <a href="https://www.law.go.kr/행정규칙/화물자동차유가보조금관리규정/(2026-384,20260716)/제8조" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg border border-amber-200 bg-white hover:bg-amber-50 text-amber-900 text-xs font-semibold transition-colors">
+            <span>국가법령정보센터 원문</span>
+            <i data-lucide="external-link" class="w-3 h-3 text-amber-600"></i>
+          </a>
+          <button onclick="closeRuleModal()" type="button" class="w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors flex items-center justify-center cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 sm:p-7 overflow-y-auto flex-1 space-y-4 text-slate-800">
+        <!-- 국가법령정보센터 공식 서식 뷰어 (두 번째 첨부 이미지 100% 재현) -->
+        <div class="bg-white border border-slate-300 rounded-2xl p-5 sm:p-7 shadow-sm font-sans leading-relaxed text-[13px] sm:text-[14px]">
+          <!-- 법령 헤더 -->
+          <div class="text-center pb-5 mb-5 border-b border-slate-200">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+              화물자동차 유가보조금 관리 규정
+            </h3>
+            <p class="text-xs text-cyan-800 font-medium mt-1">
+              [시행 2026. 7. 16.] [국토교통부고시 제2026-384호, 2026. 7. 16., 일부개정]
+            </p>
+          </div>
+
+          <!-- 조문 본문 -->
+          <div class="space-y-4 text-slate-700 leading-relaxed">
+            <!-- 제8조 제목 및 제1항 -->
+            <div>
+              <div class="flex items-start gap-2 mb-2">
+                <span class="inline-block w-3.5 h-3.5 border border-slate-400 rounded-xs shrink-0 mt-1"></span>
+                <p class="text-slate-800 leading-normal">
+                  <strong class="text-slate-900 font-bold text-[14px] sm:text-[15px]">제8조(지급단가의 산정)</strong> ① <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제4조제1호가목</a>의 유가보조금의 지급단가는 유류 구매일 현재 유류세액에서 2001년 6월 당시 유류세액(경유 리터당 183.21원, LPG 리터당 23.39원)을 뺀 나머지 금액으로 한다.
+                </p>
+              </div>
+            </div>
+
+            <!-- 제2항 -->
+            <div class="pt-2 border-t border-slate-100">
+              <div class="pl-5.5 space-y-2.5">
+                <p class="text-slate-800 leading-normal font-medium">
+                  ② <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제4조제1호나목</a>의 유가보조금의 지급단가는 다음과 같이 산출한다.
+                </p>
+
+                <!-- 제1호 (유가연동보조금) -->
+                <div class="pl-3 py-1.5 border-l-2 border-amber-400 bg-amber-50/50 rounded-r-lg">
+                  <p class="text-slate-800 leading-normal">
+                    <strong class="text-amber-900 font-semibold">1.</strong> <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제4조제1호나목의1)</a>의 경우에는 (경유가격(원/ℓ) - 기준가격(1,700원/ℓ))의 70%. 다만, 183.21원/ℓ을 초과하지 못한다.
+                  </p>
+                </div>
+
+                <!-- 제2호 (추가연동보조금) -->
+                <div class="pl-3 py-1.5 border-l-2 border-rose-400 bg-rose-50/50 rounded-r-lg">
+                  <p class="text-slate-800 leading-normal">
+                    <strong class="text-rose-900 font-semibold">2.</strong> <a href="https://www.law.go.kr" target="_blank" class="text-blue-600 hover:underline">제4조제1호나목의2)</a>의 경우에는 (경유가격(원/ℓ) - 유가연동보조금 지급 한도 금액(1961.73원/ℓ))의 70%. 다만, 경유가격은 2,100원/ℓ을 초과하지 못한다.
+                  </p>
+                </div>
+
+                <!-- 제3호 -->
+                <div class="pl-1 text-slate-600 text-[12.5px] sm:text-[13px] leading-normal">
+                  <p>
+                    3. 지급단가를 산정함에 있어서 경유가격은 한국석유공사가 제공하는 유가정보서비스(<a href="https://www.opinet.co.kr" target="_blank" class="text-blue-600 hover:underline">www.opinet.co.kr</a>)를 통하여 발표하는 자료에 의하되, 차량의 등록지에 속하는 '지역별 주유소 평균가격'에서 주유받은 직전 주의 평균가격을 적용한다. 다만, 지역을 알기 어려운 경우에는 전국 평균 판매가격을 적용할 수 있다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 제3항 -->
+            <div class="pt-2 border-t border-slate-100 pl-5.5">
+              <p class="text-slate-800 leading-normal">
+                ③ 수소화물차에 사용되는 연료보조금에 대한 지급단가는 5,000원/kg으로 한다. 다만, 향후 화물자동차 연료의 가격 변동 등을 고려하여 수소화물차 연료보조금 단가를 조정할 수 있다.
+              </p>
+            </div>
+
+            <!-- 제4항 -->
+            <div class="pt-2 border-t border-slate-100 pl-5.5">
+              <p class="text-slate-800 leading-normal">
+                ④ 국토교통부장관은 유가보조금 지급단가 또는 산출근거가 변경되었을 경우 즉시 이를 관할관청 및 카드협약사에 통지하고 유가보조금 지급에 반영되도록 한다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 실무 해설 및 493원 단가 매핑 배너 -->
+        <div class="bg-amber-50/80 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+          <i data-lucide="calculator" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+          <div class="text-xs text-slate-700 space-y-1.5">
+            <p class="font-bold text-amber-950 text-sm">💡 제8조 규정과 대시보드 3단 단가(493원/ℓ) 매핑 해설</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2 pt-2 border-t border-amber-200/60">
+              <div class="bg-white p-2.5 rounded-lg border border-amber-100">
+                <span class="font-bold text-blue-700 block mb-0.5">①항 유류세연동: 213.00원</span>
+                <span class="text-slate-500 text-[11px]">유류세 25% 인하 기준액에서 2001년 기준액 차감</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-amber-100">
+                <span class="font-bold text-amber-700 block mb-0.5">②항 1호 유가연동: +183.21원</span>
+                <span class="text-slate-500 text-[11px]">(경유가 - 1,700원) × 70% (최대한도 적용)</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-amber-100">
+                <span class="font-bold text-rose-700 block mb-0.5">②항 2호 추가연동: +96.79원</span>
+                <span class="text-slate-500 text-[11px]">(경유가 - 1,961.73원) × 70% (최대한도 적용)</span>
+              </div>
+            </div>
+            <p class="text-[11px] text-amber-800 font-semibold pt-1">➡️ 3단계 합산 시 최종 경유 지원단가 = <strong>493.00원/ℓ</strong> (규정상 최고 한도 도달)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+        <span>출처: 대한민국 국토교통부 행정규칙 / 국가법령정보센터 (law.go.kr)</span>
+        <button onclick="closeRuleModal()" type="button" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-semibold transition-colors cursor-pointer">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-2 text-xs">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">클립보드에 복사되었습니다.</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-400">
+    <p>본 대시보드는 남양주시 자동차관리과 화물팀의 2026년도 제2회 추가경정예산안 사업설명서 데이터를 기반으로 인터랙티브하게 제작되었습니다.</p>
+  </footer>
+
+  <script>
+    /* Global State */
+    let currentFuel = 'diesel'; // 'diesel' | 'lpg'
+    const dieselRate = 493.00;
+    const lpgRate = 151.57;
+
+    // Legal limits map [tonnage]: { diesel: liters, lpg: liters }
+    const limitRules = {
+      '1':  { diesel: 683,  lpg: 1024 },
+      '3':  { diesel: 1014, lpg: 1521 },
+      '5':  { diesel: 1547, lpg: 2320 },
+      '8':  { diesel: 2220, lpg: 3330 },
+      '10': { diesel: 2700, lpg: 4050 },
+      '12': { diesel: 3059, lpg: 4588 },
+      '13': { diesel: 4308, lpg: 6462 }
+    };
+
+    function setFuelType(type) {
+      currentFuel = type;
+      const dieselBtn = document.getElementById('btn-fuel-diesel');
+      const lpgBtn = document.getElementById('btn-fuel-lpg');
+
+      if (type === 'diesel') {
+        dieselBtn.className = "py-2 text-xs font-semibold rounded-lg border-2 border-blue-600 bg-blue-50 text-blue-700 transition-all flex items-center justify-center gap-1";
+        dieselBtn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i> 경유 (493원)';
+        lpgBtn.className = "py-2 text-xs font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-all flex items-center justify-center gap-1";
+        lpgBtn.innerHTML = 'LPG (151.57원)';
+      } else {
+        lpgBtn.className = "py-2 text-xs font-semibold rounded-lg border-2 border-blue-600 bg-blue-50 text-blue-700 transition-all flex items-center justify-center gap-1";
+        lpgBtn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i> LPG (151.57원)';
+        dieselBtn.className = "py-2 text-xs font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-all flex items-center justify-center gap-1";
+        dieselBtn.innerHTML = '경유 (493원)';
+      }
+      lucide.createIcons();
+      calculateSubsidy();
+    }
+
+    function updateFuelFromSlider(val) {
+      document.getElementById('fuel-slider-val').innerText = `${Number(val).toLocaleString()} ℓ`;
+      calculateSubsidy();
+    }
+
+    function setToMaxLimit() {
+      const ton = document.getElementById('select-tonnage').value;
+      const maxLimit = limitRules[ton][currentFuel];
+      const slider = document.getElementById('fuel-slider');
+      slider.value = maxLimit;
+      updateFuelFromSlider(maxLimit);
+    }
+
+    function calculateSubsidy() {
+      const tonnageEl = document.getElementById('select-tonnage');
+      if (!tonnageEl) return;
+      const ton = tonnageEl.value;
+      const sliderVal = Number(document.getElementById('fuel-slider').value);
+      const legalCap = limitRules[ton][currentFuel];
+      const unitPrice = currentFuel === 'diesel' ? dieselRate : lpgRate;
+
+      // Cap at legal limit
+      const appliedLiters = Math.min(sliderVal, legalCap);
+      const totalPayout = Math.round(appliedLiters * unitPrice);
+
+      document.getElementById('res-legal-limit').innerText = `${legalCap.toLocaleString()} ℓ`;
+      document.getElementById('res-actual-applied').innerText = `${appliedLiters.toLocaleString()} ℓ`;
+      document.getElementById('res-total-subsidy').innerText = `${totalPayout.toLocaleString()}원`;
+
+      const statusEl = document.getElementById('res-limit-status');
+      if (sliderVal > legalCap) {
+        statusEl.innerHTML = `<span class="text-amber-400 font-semibold">⚠️ 법정한도 초과 (${(sliderVal - legalCap).toLocaleString()}ℓ 제외됨)</span>`;
+      } else {
+        statusEl.innerHTML = `법정 한도 내 전액 지원 (${Math.round((sliderVal / legalCap) * 100)}% 소진)`;
+      }
+    }
+
+    function toggleFaq(id) {
+      const body = document.getElementById(`${id}-body`);
+      const icon = document.getElementById(`${id}-icon`);
+      if (body.classList.contains('hidden')) {
+        body.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        body.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    function openLawModal() {
+      const modal = document.getElementById('lawModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        lucide.createIcons();
+      }
+    }
+
+    function closeLawModal() {
+      const modal = document.getElementById('lawModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function openRuleModal() {
+      const modal = document.getElementById('ruleModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        lucide.createIcons();
+      }
+    }
+
+    function closeRuleModal() {
+      const modal = document.getElementById('ruleModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLawModal();
+        closeRuleModal();
+      }
+    });
+
+    function copySummaryText() {
+      const summaryText = `[남양주시 화물자동차 유가보조금 제2회 추경 핵심 요약]
+- 예산: 122억 → 149억 원 (27억 증액)
+- 지원대상: 관내 화물차 7,440대
+- 사유: 중동사태로 경유 보조금 단가가 292.66원에서 최대 493원/ℓ(유가연동보조금 발생)으로 급등
+- 하반기 소요: 약 87.8억 원 대비 잔액(62.2억) 부족(약 25.7억 원 부족분 반영)`;
+      
+      const textArea = document.createElement("textarea");
+      textArea.value = summaryText;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast("보고 요약문이 복사되었습니다.");
+      } catch (err) {
+        showToast("복사에 실패했습니다.");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      calculateSubsidy();
+
+      // Monthly Trend Chart (2024 vs 2025 vs 2026)
+      const trendCtx = document.getElementById('monthlyTrendChart').getContext('2d');
+      new Chart(trendCtx, {
+        type: 'line',
+        data: {
+          labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+          datasets: [
+            {
+              label: '2026년 집행액 (중동유가 급등)',
+              data: [948.9, 905.4, 779.9, 1048.9, 1147.4, 1145.6, null, null, null, null, null, null],
+              borderColor: '#ef4444',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              borderWidth: 3,
+              pointRadius: 4,
+              pointBackgroundColor: '#ef4444',
+              fill: false,
+              tension: 0.3
+            },
+            {
+              label: '2025년 집행액',
+              data: [711.8, 618.4, 636.3, 666.4, 698.4, 811.7, 806.0, 882.0, 827.5, 863.0, 778.2, 925.7],
+              borderColor: '#3b82f6',
+              borderWidth: 2,
+              pointRadius: 3,
+              tension: 0.2
+            },
+            {
+              label: '2024년 집행액',
+              data: [461.2, 451.8, 407.6, 461.4, 459.0, 468.7, 461.3, 576.5, 595.6, 544.7, 597.8, 700.0],
+              borderColor: '#94a3b8',
+              borderWidth: 1.5,
+              borderDash: [4, 4],
+              pointRadius: 2,
+              tension: 0.2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.dataset.label}: ${ctx.raw ? ctx.raw.toLocaleString() + ' 백만 원' : '집행 예정'}`
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              ticks: { callback: (v) => v + '백만' },
+              grid: { color: '#f1f5f9' }
+            },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+
+      // Annual Budget vs Expenditure Chart
+      const annualCtx = document.getElementById('annualBudgetChart').getContext('2d');
+      new Chart(annualCtx, {
+        type: 'bar',
+        data: {
+          labels: ['2022', '2023', '2024', '2025', '2026(최종)'],
+          datasets: [
+            {
+              label: '예산액',
+              data: [115, 122, 122, 122, 149],
+              backgroundColor: '#93c5fd',
+              borderRadius: 6
+            },
+            {
+              label: '지출액(예상)',
+              data: [78.3, 55.5, 61.9, 92.4, 147.7],
+              backgroundColor: '#1d4ed8',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.dataset.label}: 약 ${ctx.raw}억 원`
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { callback: (v) => v + '억' },
+              grid: { color: '#f1f5f9' }
+            },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

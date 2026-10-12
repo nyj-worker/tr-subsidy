@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>화물자동차 유가보조금 부정수급 점검 실적 및 처분 대장 (2024~2026)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans KR"', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            gov: {
+              50: '#f0f5fa',
+              100: '#e1ecf5',
+              500: '#1e40af',
+              600: '#1d4ed8',
+              700: '#1e3a8a',
+              800: '#172554',
+              900: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 10pt; }
+      .print-card { box-shadow: none !important; border: 1px solid #cbd5e1 !important; page-break-inside: avoid; }
+      #detailModal { position: static !important; display: block !important; background: transparent !important; }
+      #detailModal > div { max-width: 100% !important; box-shadow: none !important; border: none !important; }
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    
+    .badge-highlight {
+      animation: pulseHighlight 2s infinite;
+    }
+    @keyframes pulseHighlight {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen font-sans transition-colors duration-200">
+
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/25">
+          <i class="fa-solid fa-truck-ramp-box text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">행정 총괄 점검 보고</span>
+            <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">2024 ~ 2026 3개년 결산</span>
+          </div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight">화물자동차 유가보조금 부정수급 점검 실적 및 처분 대장</h1>
+        </div>
+      </div>
+      
+      <!-- Utility Action Controls -->
+      <div class="flex items-center space-x-2 sm:space-x-3 no-print">
+        <button onclick="exportCSVAll()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors flex items-center space-x-1.5 shadow-2xs">
+          <i class="fa-solid fa-file-excel text-emerald-600"></i>
+          <span class="hidden sm:inline">전체 대장 다운로드</span>
+          <span class="sm:hidden">CSV</span>
+        </button>
+
+        <button onclick="window.print()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors flex items-center space-x-1.5 shadow-2xs">
+          <i class="fa-solid fa-print text-indigo-500"></i>
+          <span class="hidden sm:inline">보고서 인쇄</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors" title="화면 모드 전환">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- KPI Metric Cards Grid -->
+    <section>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+        <div>
+          <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-blue-600 dark:text-blue-400"></i>
+            핵심 점검 실적 지표 (3개년 종합 총결산)
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">한국석유관리원 합동점검, 지자체 자체점검 및 UGAMS 의심거래 내역 전수 집계</p>
+        </div>
+        <div class="mt-2 sm:mt-0 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1 rounded-full w-fit flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-halved text-blue-500"></i>
+          <span>근거 법령: 「화물자동차 유가보조금 관리규정」 제28조</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- KPI 1: 누적 총 환수금액 -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs relative overflow-hidden group">
+          <div class="absolute -right-3 -top-3 w-20 h-20 bg-blue-500/10 dark:bg-blue-500/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-300"></div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">누적 총 환수금액</span>
+            <span class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-won-sign"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline space-x-1.5">
+            <span class="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">2,045,350</span>
+            <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">원</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <span>'24년 (98.9만)</span>
+            <span>'25년 (61.3만)</span>
+            <span>'26년 (44.2만)</span>
+          </div>
+        </div>
+
+        <!-- KPI 2: 누적 행정처분 건수 -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs relative overflow-hidden group">
+          <div class="absolute -right-3 -top-3 w-20 h-20 bg-amber-500/10 dark:bg-amber-500/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-300"></div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">누적 자체 처분건수</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-300 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-gavel"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline space-x-1.5">
+            <span class="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 tracking-tight">27</span>
+            <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">건</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <span>전액환수 + 6개월 정지</span>
+            <span class="font-bold text-amber-600 dark:text-amber-400">100% 조치완료</span>
+          </div>
+        </div>
+
+        <!-- KPI 3: 타 관청 이첩 건수 -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs relative overflow-hidden group">
+          <div class="absolute -right-3 -top-3 w-20 h-20 bg-purple-500/10 dark:bg-purple-500/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-300"></div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">타 관청 이첩 건수</span>
+            <span class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-share-from-square"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline space-x-1.5">
+            <span class="text-2xl sm:text-3xl font-extrabold text-purple-600 dark:text-purple-400 tracking-tight">32</span>
+            <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">건</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <span>타 지자체 차량 처분통보</span>
+            <span class="font-medium text-purple-600 dark:text-purple-400">'25년 28건 / '26년 4건</span>
+          </div>
+        </div>
+
+        <!-- KPI 4: 점검 주유소 개소 -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs relative overflow-hidden group">
+          <div class="absolute -right-3 -top-3 w-20 h-20 bg-emerald-500/10 dark:bg-emerald-500/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-300"></div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">점검 대상 주유소</span>
+            <span class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-gas-pump"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline space-x-2">
+            <span class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">20</span>
+            <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">개소</span>
+            <span class="text-xs px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 font-medium ml-auto">총 7회 실시</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <span>'24년 (1)</span>
+            <span>'25년 (11)</span>
+            <span>'26년 (8)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 종합 대장 표 (사용자 제공 이미지 및 빨간색 박스 상세 버튼 완벽 구현 영역) -->
+    <section class="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-table-list text-blue-600 text-lg"></i>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">화물자동차 유가보조금 부정수급 점검 종합 대장</h3>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            정부 제출용 원장 기준 데이터 (우측 <b class="text-red-500 dark:text-red-400"><i class="fa-solid fa-arrow-up-right-from-square"></i> 상세 버튼</b> 클릭 시 각 연도별 원천 처분/이첩 대장으로 즉시 연결됩니다)
+          </p>
+        </div>
+        
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
+            <button onclick="filterTable('all')" id="btn-all" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-2xs filter-btn transition-colors">전체 (3개년)</button>
+            <button onclick="filterTable('2024')" id="btn-2024" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 filter-btn transition-colors">2024년</button>
+            <button onclick="filterTable('2025')" id="btn-2025" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 filter-btn transition-colors">2025년</button>
+            <button onclick="filterTable('2026')" id="btn-2026" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 filter-btn transition-colors">2026년</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Table Container -->
+      <div class="overflow-x-auto mt-4 rounded-xl border border-slate-200 dark:border-slate-800">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="bg-slate-100/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
+              <th class="py-3.5 px-4 font-bold text-center w-24">년도</th>
+              <th class="py-3.5 px-4 font-bold">점검 일자 및 내역</th>
+              <th class="py-3.5 px-4 font-bold text-center">점검 주유소</th>
+              <th class="py-3.5 px-4 font-bold text-right">처분 건수</th>
+              <th class="py-3.5 px-4 font-bold text-right">환수 금액 (원)</th>
+              <th class="py-3.5 px-4 font-bold text-center">이첩 건(타 관청)</th>
+              <th class="py-3.5 px-4 font-bold">관련 법령</th>
+              <th class="py-3.5 px-3 font-bold text-center w-24 bg-red-50/70 dark:bg-red-950/20 text-red-600 dark:text-red-400 border-l border-red-200 dark:border-red-900/40">
+                <span class="inline-flex items-center gap-1 font-bold">
+                  상세 <i class="fa-solid fa-link text-[10px]"></i>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="dataTableBody" class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+            <!-- JavaScript dynamically renders rows with direct connection links -->
+          </tbody>
+          <tfoot class="bg-blue-50/70 dark:bg-blue-950/40 font-bold border-t-2 border-blue-200 dark:border-blue-900 text-slate-900 dark:text-slate-100">
+            <tr>
+              <td class="py-3.5 px-4 text-center text-blue-700 dark:text-blue-300">합계 (총 결산)</td>
+              <td class="py-3.5 px-4">총 7회 점검 (합동 4회, 자체 2회, 재점검 1회)</td>
+              <td class="py-3.5 px-4 text-center text-emerald-600 dark:text-emerald-400">20개소</td>
+              <td class="py-3.5 px-4 text-right text-amber-600 dark:text-amber-400">27건</td>
+              <td class="py-3.5 px-4 text-right text-blue-700 dark:text-blue-300 text-base">2,045,350원</td>
+              <td class="py-3.5 px-4 text-center text-purple-600 dark:text-purple-400">32건</td>
+              <td class="py-3.5 px-4 text-xs text-slate-600 dark:text-slate-400">「화물자동차 유가보조금 관리규정」 제28조</td>
+              <td class="py-3.5 px-3 text-center bg-red-50/70 dark:bg-red-950/20 border-l border-red-200 dark:border-red-900/40">
+                <button onclick="openDetailModal('all')" class="text-xs px-2 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors shadow-2xs">
+                  전체보기
+                </button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Visual Charts & Analytics Section -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Chart 1: 환수금액 및 점검 주유소 개소 추이 -->
+      <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-2">
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-column text-blue-600"></i>
+              연도별 환수금액 및 점검 주유소 변동 추이
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">주유소 현장 지도점검 확대 및 유가보조금 환수 실적 추이</p>
+          </div>
+          <div class="flex items-center space-x-4 text-xs font-medium">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-xs bg-blue-600 inline-block"></span> 환수금액(원)</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-1.5 rounded-full bg-emerald-500 inline-block"></span> 점검주유소(개소)</span>
+          </div>
+        </div>
+        <div class="relative h-72 sm:h-80 mt-4">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: 점검 유형별 점검 시행 비율 -->
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
+        <div class="pb-3 border-b border-slate-100 dark:border-slate-800">
+          <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-indigo-600"></i>
+            점검 유형별 시행 분포
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">총 7회 실시된 유가보조금 점검 형태별 구성비</p>
+        </div>
+        <div class="relative h-56 my-2 flex items-center justify-center">
+          <canvas id="inspectionTypeChart"></canvas>
+        </div>
+        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800 text-center text-xs">
+          <div class="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/40">
+            <p class="text-slate-500 dark:text-slate-400">석유관리원합동</p>
+            <p class="font-bold text-blue-600 dark:text-blue-400 text-sm">4회 (57.1%)</p>
+          </div>
+          <div class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/40">
+            <p class="text-slate-500 dark:text-slate-400">지자체 자체</p>
+            <p class="font-bold text-indigo-600 dark:text-indigo-400 text-sm">2회 (28.6%)</p>
+          </div>
+          <div class="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/40">
+            <p class="text-slate-500 dark:text-slate-400">의심처 재점검</p>
+            <p class="font-bold text-amber-600 dark:text-amber-400 text-sm">1회 (14.3%)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inspection Chronology Timeline Section -->
+    <section class="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-2 mb-6">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-clock-rotate-left text-blue-600"></i>
+            연도별 점검 시행 상세 타임라인 (총 7회)
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">2024년부터 2026년까지 시행된 상세 점검 일정 및 처분 내역 개요</p>
+        </div>
+        <span class="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 font-semibold text-slate-600 dark:text-slate-300 self-start sm:self-auto">
+          한국석유관리원 합동 및 지자체 자체
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 2024 Timeline Card -->
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <div class="flex items-center space-x-2">
+                <span class="w-3 h-3 rounded-full bg-blue-600"></span>
+                <span class="text-base font-bold text-slate-900 dark:text-white">2024년 실적</span>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">1개소 / 1회</span>
+            </div>
+            <div class="space-y-3">
+              <div class="p-3 bg-white dark:bg-slate-900 rounded-xl shadow-2xs border-l-4 border-blue-600">
+                <div class="flex justify-between items-start">
+                  <span class="text-xs font-bold text-blue-600 dark:text-blue-400">11월 24일</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-300 font-semibold">석유관리공사 합동</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">하반기 합동점검 실시</p>
+                <div class="mt-2 text-xs text-slate-500 space-y-1">
+                  <div class="flex justify-between"><span>처분건수:</span> <b class="text-amber-600 dark:text-amber-400">15건</b></div>
+                  <div class="flex justify-between"><span>환수금액:</span> <b class="text-slate-800 dark:text-slate-200">989,640원</b></div>
+                  <div class="flex justify-between"><span>타 관청 이첩:</span> <span class="text-slate-400">- (0건)</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button onclick="openDetailModal(2024)" class="mt-4 w-full py-2 px-3 rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors">
+            <i class="fa-solid fa-list-check"></i> 2024년 15건 처분대장 열람
+          </button>
+        </div>
+
+        <!-- 2025 Timeline Card -->
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <div class="flex items-center space-x-2">
+                <span class="w-3 h-3 rounded-full bg-indigo-600"></span>
+                <span class="text-base font-bold text-slate-900 dark:text-white">2025년 실적</span>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300">11개소 / 3회</span>
+            </div>
+            <div class="space-y-2.5">
+              <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl shadow-2xs border-l-4 border-indigo-600">
+                <div class="flex justify-between items-start">
+                  <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">5월 20일</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 font-semibold">합동</span>
+                </div>
+                <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-0.5">석유관리공사 상반기 합동점검</p>
+              </div>
+              <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl shadow-2xs border-l-4 border-indigo-500">
+                <div class="flex justify-between items-start">
+                  <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">11월 11일</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 font-semibold">합동</span>
+                </div>
+                <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-0.5">석유관리공사 하반기 합동점검</p>
+              </div>
+              <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl shadow-2xs border-l-4 border-amber-500">
+                <div class="flex justify-between items-start">
+                  <span class="text-xs font-bold text-amber-600 dark:text-amber-400">12월 9일</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950 text-amber-600 font-semibold">특별 재점검</span>
+                </div>
+                <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-0.5">하반기 합동 외 의심주유소 재점검</p>
+              </div>
+              <div class="p-2 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/30 text-[11px] text-indigo-900 dark:text-indigo-200 flex justify-between font-medium">
+                <span>처분 7건 / 환수 613,630원</span>
+                <span class="text-purple-600 dark:text-purple-300 font-bold">이첩 28건</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="openDetailModal(2025)" class="mt-4 w-full py-2 px-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors">
+            <i class="fa-solid fa-list-check"></i> 2025년 7건 처분 & 28건 이첩대장
+          </button>
+        </div>
+
+        <!-- 2026 Timeline Card -->
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <div class="flex items-center space-x-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
+                <span class="text-base font-bold text-slate-900 dark:text-white">2026년 실적</span>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">8개소 / 3회</span>
+            </div>
+            <div class="space-y-2.5">
+              <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl shadow-2xs border-l-4 border-emerald-600">
+                <div class="flex justify-between items-start">
+                  <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">4월 7일</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950 text-emerald-600 font-semibold">자체점검</span>
+                </div>
+                <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-0.5">유가보조금 부정수급 자체점검</p>
+              </div>
+              <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl shadow-2xs border-l-4 border-blue-500">
+                <div class="flex justify-between items-start">
+                  <span class="text-xs font-bold text-blue-600 dark:text-blue-400">6월 9일</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-600 font-semibold">합동</span>
+                </div>
+                <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-0.5">석유관리공사 상반기 합동점검</p>
+              </div>
+              <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl shadow-2xs border-l-4 border-emerald-600">
+                <div class="flex justify-between items-start">
+                  <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">8월 26일</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950 text-emerald-600 font-semibold">자체점검</span>
+                </div>
+                <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-0.5">유가보조금 부정수급 자체점검</p>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-50/70 dark:bg-emerald-950/30 text-[11px] text-emerald-900 dark:text-emerald-200 flex justify-between font-medium">
+                <span>처분 5건 / 환수 442,080원</span>
+                <span class="text-purple-600 dark:text-purple-300 font-bold">이첩 4건</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="openDetailModal(2026)" class="mt-4 w-full py-2 px-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors">
+            <i class="fa-solid fa-list-check"></i> 2026년 5건 처분 & 4건 이첩대장
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statutory Legal Explanation Section -->
+    <section class="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 text-white rounded-2xl p-6 sm:p-7 shadow-lg">
+      <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+        <div class="space-y-3 max-w-3xl">
+          <div class="inline-flex items-center space-x-2 bg-blue-500/20 border border-blue-400/30 px-3 py-1 rounded-full text-xs font-semibold text-blue-200">
+            <i class="fa-solid fa-scale-balanced"></i>
+            <span>근거 규정 안내</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+            「화물자동차 유가보조금 관리규정」 제28조 (부정수급에 대한 행정상 제재)
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            국토교통부 훈령에 의거하여 화물자동차 운송사업자 또는 위·수탁차주가 거짓이나 부정한 방법으로 유가보조금을 지급받은 경우, <b>지급된 보조금 전액 환수</b> 조치와 함께 위반 횟수에 따라 <b>유가보조금 지급정지</b>(1차 6개월, 2차 이상 1년)의 행정처분을 엄정하게 집행합니다.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+              <h4 class="text-xs font-bold text-blue-300 mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-left"></i> 전액 환수 및 지급정지 6개월
+              </h4>
+              <p class="text-xs text-slate-300">적발된 27건의 처분 대상자 모두 관리규정 제28조에 의거 환수 처분 및 6개월 지급정지 처분 확정 및 납부 완료.</p>
+            </div>
+            <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+              <h4 class="text-xs font-bold text-purple-300 mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-building-columns"></i> 관할 외 차량 타 지자체 이첩 의무
+              </h4>
+              <p class="text-xs text-slate-300">점검 주유소에서 적발된 타 시·군·구 등록 화물차량(32건)은 적발 즉시 관할 지자체로 공식 공문 이첩하여 처분을 요청함.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 lg:w-80 border border-white/10 shrink-0">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info"></i> 점검 및 처분 요약
+          </h4>
+          <ul class="text-xs space-y-2.5 text-slate-200">
+            <li class="flex items-start justify-between">
+              <span class="text-slate-400">합동 점검기관:</span>
+              <span class="font-semibold text-right">지자체 &amp; 한국석유관리원</span>
+            </li>
+            <li class="flex items-start justify-between">
+              <span class="text-slate-400">부정수급 유형:</span>
+              <span class="font-semibold text-right">타차량 주유, 기름통 주유 등</span>
+            </li>
+            <li class="flex items-start justify-between">
+              <span class="text-slate-400">총 처분 환수금:</span>
+              <span class="font-semibold text-emerald-300 text-right">2,045,350원 (27건)</span>
+            </li>
+            <li class="flex items-start justify-between">
+              <span class="text-slate-400">타 관청 이첩 건:</span>
+              <span class="font-semibold text-purple-300 text-right">32건 (2025: 28, 2026: 4)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 상세 내역 모달 (빨간색 박스 클릭 시 연결되는 전체 세부 대장 뷰어) -->
+  <!-- ========================================================================= -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-5xl w-full my-6 max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 transition-all transform overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/80 dark:bg-slate-800/80 shrink-0">
+        <div class="flex items-center space-x-3">
+          <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+          <div>
+            <h4 id="modalYearTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>연도별 부정수급 처분 및 이첩 세부 대장</span>
+            </h4>
+            <p id="modalSubTitle" class="text-xs text-slate-500 dark:text-slate-400">UGAMS 의심거래 내역 처분 및 석유관리공사 합동점검 이첩 원장 데이터</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center space-x-2">
+          <button onclick="exportModalCSV()" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 flex items-center gap-1 transition-colors">
+            <i class="fa-solid fa-download text-emerald-600"></i>
+            <span class="hidden sm:inline">현재 탭 CSV</span>
+          </button>
+          <button onclick="closeModal()" class="w-8 h-8 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 flex items-center justify-center transition-colors">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body Filters & Sub-Tabs -->
+      <div class="px-4 sm:px-6 py-3 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+        <!-- Sub-Tabs: 처분 내역 vs 타관청 이첩 내역 -->
+        <div class="flex space-x-2">
+          <button id="tabBtnDispositions" onclick="switchModalTab('dispositions')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-blue-600 text-white shadow-2xs">
+            <i class="fa-solid fa-gavel"></i>
+            <span>행정처분 내역</span>
+            <span id="tabCountDispositions" class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 text-white">0건</span>
+          </button>
+          <button id="tabBtnTransfers" onclick="switchModalTab('transfers')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">
+            <i class="fa-solid fa-share-from-square"></i>
+            <span>타 관청 이첩 내역</span>
+            <span id="tabCountTransfers" class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">0건</span>
+          </button>
+        </div>
+
+        <!-- Search Bar within Modal -->
+        <div class="relative w-full sm:w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
+          <input type="text" id="modalSearchInput" oninput="filterModalData()" placeholder="차량번호, 납부자명, 관청 검색..." class="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-hidden focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <!-- Modal Content Area (Scrollable Table) -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex-1 bg-slate-50/50 dark:bg-slate-950/40">
+        <!-- Summary Stats Banner for Modal -->
+        <div id="modalSummaryStats" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Table Container -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900 shadow-2xs">
+          <!-- Dispositions Table View -->
+          <div id="dispositionsTableView" class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
+                <tr>
+                  <th class="py-3 px-3 text-center w-12">No.</th>
+                  <th class="py-3 px-3 font-semibold">차량번호</th>
+                  <th class="py-3 px-3 font-semibold">납부자명</th>
+                  <th class="py-3 px-3 font-semibold">행정처분 내역</th>
+                  <th class="py-3 px-3 text-right font-semibold">납부금액 (원)</th>
+                  <th class="py-3 px-3 font-semibold">관련 법령</th>
+                  <th class="py-3 px-3 text-center font-semibold">처분 일자</th>
+                </tr>
+              </thead>
+              <tbody id="dispositionsTableBody" class="divide-y divide-slate-100 dark:divide-slate-800/80 font-medium">
+                <!-- Dynamically populated -->
+              </tbody>
+              <tfoot id="dispositionsTableFoot" class="bg-blue-50/60 dark:bg-blue-950/30 font-bold border-t border-slate-200 dark:border-slate-700">
+                <!-- Sum Row -->
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Transfers Table View -->
+          <div id="transfersTableView" class="overflow-x-auto hidden">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
+                <tr>
+                  <th class="py-3 px-3 text-center w-12">No.</th>
+                  <th class="py-3 px-3 font-semibold">차량번호</th>
+                  <th class="py-3 px-3 font-semibold text-center">위반사항</th>
+                  <th class="py-3 px-3 font-semibold">관할 관청</th>
+                  <th class="py-3 px-3 font-semibold">관련 법령</th>
+                  <th class="py-3 px-3 text-center font-semibold">부정수급 일시</th>
+                  <th class="py-3 px-3 text-center font-semibold">비고 / 비고사항</th>
+                </tr>
+              </thead>
+              <tbody id="transfersTableBody" class="divide-y divide-slate-100 dark:divide-slate-800/80 font-medium">
+                <!-- Dynamically populated -->
+              </tbody>
+              <tfoot id="transfersTableFoot" class="bg-purple-50/60 dark:bg-purple-950/30 font-bold border-t border-slate-200 dark:border-slate-700">
+                <!-- Sum Row -->
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Empty State Notice -->
+        <div id="emptyNotice" class="hidden py-12 text-center text-slate-400">
+          <i class="fa-solid fa-file-circle-xmark text-4xl mb-2 text-slate-300 dark:text-slate-600"></i>
+          <p class="text-sm font-semibold">해당 조건에 해당하는 내역이 없습니다.</p>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-3 sm:p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/80 flex items-center justify-between shrink-0">
+        <span class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+          <span><i class="fa-solid fa-circle-check text-blue-600 mr-1"></i>행정처분 기준: 전액 환수 및 6개월 유가보조금 지급정지</span>
+          <span class="hidden sm:inline text-slate-300 dark:text-slate-600">|</span>
+          <span class="hidden sm:inline text-blue-600 dark:text-blue-400"><i class="fa-solid fa-user-shield mr-1"></i>차량번호(경기******) 및 성명(***) 비식별화 완료</span>
+        </span>
+        <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-lg text-xs font-bold transition-colors">
+          창 닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Floating Toast Container -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-xl flex items-center space-x-3 text-xs sm:text-sm font-medium">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600"></i>
+    <span id="toastMessage">알림 메시지</span>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. Master Data parsed 100% comprehensively from 2024.pdf, 2025.pdf, 2026.pdf
+       ========================================================================== */
+    
+    // Overview Data for Master Table
+    const summaryData = [
+      {
+        year: 2024,
+        inspectionDates: [
+          { date: "11. 24.", title: "석유관리공사 하반기 합동점검", type: "합동" }
+        ],
+        cases: 15,
+        refund: 989640,
+        transferred: 0,
+        transferredLabel: "-",
+        law: "「화물자동차 유가보조금 관리규정」 제28조",
+        stations: 1
+      },
+      {
+        year: 2025,
+        inspectionDates: [
+          { date: "5. 20.", title: "석유관리공사 상반기 합동점검", type: "합동" },
+          { date: "11. 11.", title: "석유관리공사 하반기 합동점검", type: "합동" },
+          { date: "12. 9.", title: "하반기 합동점검 외 의심주유소 재점검", type: "재점검" }
+        ],
+        cases: 7,
+        refund: 613630,
+        transferred: 28,
+        transferredLabel: "28건",
+        law: "「화물자동차 유가보조금 관리규정」 제28조",
+        stations: 11
+      },
+      {
+        year: 2026,
+        inspectionDates: [
+          { date: "4. 7.", title: "유가보조금 부정수급 자체점검", type: "자체" },
+          { date: "6. 9.", title: "석유관리공사 상반기 합동점검", type: "합동" },
+          { date: "8. 26.", title: "유가보조금 부정수급 자체점검", type: "자체" }
+        ],
+        cases: 5,
+        refund: 442080,
+        transferred: 4,
+        transferredLabel: "4건",
+        law: "「화물자동차 유가보조금 관리규정」 제28조",
+        stations: 8
+      }
+    ];
+
+    // Detailed Dispositions Data (2024.pdf: 15건 / 2025.pdf: 7건 / 2026.pdf: 5건 = 총 27건 전수 수록 - 차량번호 경기****** 및 성명 *** 비식별화)
+    const dispositionsData = [
+      // --- 2024년 15건 ---
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 76180, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 1. 22." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 220030, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 2. 26." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 21320, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 2. 26." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 22750, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 2. 13." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 30470, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 8. 9." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 112830, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 8. 9." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 50880, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 8. 9." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 18430, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 8. 9." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 68220, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 8. 9." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 41240, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 8. 9." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 123110, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 11. 11." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 77680, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 11. 11." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 49490, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 11. 11." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 5410, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 12. 3." },
+      { year: 2024, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 71600, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2024. 12. 16." },
+
+      // --- 2025년 7건 ---
+      { year: 2025, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 36780, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2025. 4. 30." },
+      { year: 2025, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 29390, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2025. 8. 1." },
+      { year: 2025, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 162630, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2025. 10. 1." },
+      { year: 2025, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 123140, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2025. 10. 21." },
+      { year: 2025, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 99880, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2025. 10. 21." },
+      { year: 2025, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 82630, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2025. 10. 27." },
+      { year: 2025, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 79180, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2025. 10. 27." },
+
+      // --- 2026년 5건 ---
+      { year: 2026, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 84110, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2026. 4. 24." },
+      { year: 2026, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 321630, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2026. 4. 24." },
+      { year: 2026, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 36340, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2026. 7. 29." },
+      { year: 2026, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 17710, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2026. 9. 18." },
+      { year: 2026, vehicleNo: "경기******", name: "***", disposition: "유가보조금 전액환수 및 6개월 지급정지", amount: 13690, law: "「화물유가보조금 관리규정」 제28조 위반", date: "2026. 10. 8." }
+    ];
+
+    // Detailed Transfers Data (2025.pdf: 28건 / 2026.pdf: 4건 = 총 32건 전수 수록 - 차량번호 지역명 외 ****** 비식별화)
+    const transfersData = [
+      // --- 2025년 석유관리공사 합동점검 이첩 28건 ---
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 8.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 8.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 8.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 6.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 6.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 6.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 5.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 5.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 5.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "기름통에 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 5.", note: "기름통 주유 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 5.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 5.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 4.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 4.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "강원******", violation: "타 차량 주유", authority: "강원도 원주시", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 4.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 4.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 3.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 3.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 3.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 2.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 2.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 2.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 2.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "강원******", violation: "타 차량 주유", authority: "강원도 춘천시", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 2.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 중구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 1.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 1.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 금천구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 1.", note: "합동점검 적발" },
+      { year: 2025, vehicleNo: "강원******", violation: "타 차량 주유", authority: "강원도 원주시", law: "「화물유가보조금 관리규정」 제28조 위반", date: "25. 12. 1.", note: "합동점검 적발" },
+
+      // --- 2026년 점검 및 UGAMS 의심거래 이첩 4건 ---
+      { year: 2026, vehicleNo: "경기******", violation: "타 차량 주유", authority: "경기도 과천시", law: "화물유가보조금 관리규정 제28조 위반", date: "2026. 3. 1. ~ 4. 5.", note: "자체점검 적발" },
+      { year: 2026, vehicleNo: "경기******", violation: "타 차량 주유", authority: "경기도 여주시", law: "화물유가보조금 관리규정 제28조 위반", date: "2026. 6. 2.", note: "합동점검 적발" },
+      { year: 2026, vehicleNo: "경기******", violation: "타 차량 주유", authority: "경기도 구리시", law: "화물유가보조금 관리규정 제28조 위반", date: "2026. 2. 25.", note: "UGAMS 의심거래내역" },
+      { year: 2026, vehicleNo: "서울******", violation: "타 차량 주유", authority: "서울특별시 마포구", law: "「화물유가보조금 관리규정」 제28조 위반", date: "2026. 8. 10.", note: "점검 적발" }
+    ];
+
+    /* ==========================================================================
+       2. Application State Variables
+       ========================================================================== */
+    let currentFilter = 'all';
+    let modalYear = 2024; // 2024, 2025, 2026, or 'all'
+    let currentModalTab = 'dispositions'; // 'dispositions' or 'transfers'
+    let trendChartInstance = null;
+    let typeChartInstance = null;
+
+    // Currency Formatter Helper
+    function formatCurrency(val) {
+      return new Intl.NumberFormat('ko-KR').format(val);
+    }
+
+    // Render Master Table with exact Red-Box button matching
+    function renderMasterTable() {
+      const tbody = document.getElementById('dataTableBody');
+      tbody.innerHTML = '';
+
+      const filtered = currentFilter === 'all' 
+        ? summaryData 
+        : summaryData.filter(d => d.year.toString() === currentFilter);
+
+      filtered.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors";
+
+        // Build inspection badges
+        const dateBadges = row.inspectionDates.map(item => {
+          let badgeColor = "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800";
+          if (item.type === "자체") {
+            badgeColor = "bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950 dark:text-indigo-300 dark:border-indigo-800";
+          } else if (item.type === "재점검") {
+            badgeColor = "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800";
+          }
+          return `
+            <div class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md border ${badgeColor} text-xs font-medium my-0.5">
+              <span class="font-bold">${item.date}</span>
+              <span class="text-slate-400 dark:text-slate-500">|</span>
+              <span>${item.title}</span>
+            </div>
+          `;
+        }).join('');
+
+        const transferBadge = row.transferred > 0 
+          ? `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">${row.transferredLabel}</span>`
+          : `<span class="text-slate-400 font-medium">-</span>`;
+
+        // The Red-Box button is placed directly in the last column
+        tr.innerHTML = `
+          <td class="py-4 px-4 text-center font-bold text-slate-900 dark:text-white">
+            <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800">${row.year}년</span>
+          </td>
+          <td class="py-4 px-4">
+            <div class="flex flex-col space-y-1">
+              ${dateBadges}
+            </div>
+          </td>
+          <td class="py-4 px-4 text-center font-semibold text-emerald-600 dark:text-emerald-400">
+            ${row.stations}개소
+          </td>
+          <td class="py-4 px-4 text-right font-bold text-amber-600 dark:text-amber-400">
+            ${row.cases}건
+          </td>
+          <td class="py-4 px-4 text-right font-extrabold text-blue-600 dark:text-blue-400 text-sm">
+            ${formatCurrency(row.refund)}원
+          </td>
+          <td class="py-4 px-4 text-center">
+            ${transferBadge}
+          </td>
+          <td class="py-4 px-4 text-xs text-slate-600 dark:text-slate-300">
+            <div class="truncate max-w-xs" title="${row.law}">
+              ${row.law}
+            </div>
+          </td>
+          <!-- 빨간색 박스 상세 버튼 컬럼: 각 연도별 원천 데이터 모달로 직접 연결 -->
+          <td class="py-4 px-3 text-center bg-red-50/50 dark:bg-red-950/20 border-l border-red-200 dark:border-red-900/40">
+            <button onclick="openDetailModal(${row.year})" title="${row.year}년 상세 대장 열람" class="w-9 h-9 mx-auto rounded-xl bg-white dark:bg-slate-800 border-2 border-red-400 dark:border-red-500 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 text-red-500 dark:text-red-400 transition-all flex items-center justify-center shadow-xs group">
+              <i class="fa-solid fa-arrow-up-right-from-square text-sm group-hover:scale-110 transition-transform"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Filter Table Handler
+    function filterTable(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-slate-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-2xs');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+
+      const activeBtn = document.getElementById(`btn-${filter}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-2xs');
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+      }
+      renderMasterTable();
+    }
+
+    // Open Detailed Modal connected to corresponding Year from Red Boxes
+    function openDetailModal(year) {
+      modalYear = year;
+      const titleElem = document.getElementById('modalYearTitle');
+      const subTitleElem = document.getElementById('modalSubTitle');
+      const searchInput = document.getElementById('modalSearchInput');
+      searchInput.value = '';
+
+      if (year === 'all') {
+        titleElem.innerHTML = `<span>3개년 통합 부정수급 및 이첩 전수 대장 (2024~2026)</span>`;
+        subTitleElem.textContent = "2024년, 2025년, 2026년 전체 행정처분 27건 및 타 관청 이첩 32건 통합 조회";
+      } else {
+        const sumInfo = summaryData.find(d => d.year === year);
+        titleElem.innerHTML = `
+          <span class="px-2.5 py-0.5 rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 mr-1">${year}년도</span>
+          <span>부정수급 처분 및 타 관청 이첩 원장 대장</span>
+        `;
+        subTitleElem.textContent = `${year}년 점검 ${sumInfo ? sumInfo.inspectionDates.map(x=>x.title).join(', ') : ''} 기준 원본 내역`;
+      }
+
+      // Default to Dispositions tab
+      switchModalTab('dispositions');
+      document.getElementById('detailModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close Modal
+    function closeModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Switch Modal Tabs
+    function switchModalTab(tab) {
+      currentModalTab = tab;
+      const btnDisp = document.getElementById('tabBtnDispositions');
+      const btnTrans = document.getElementById('tabBtnTransfers');
+      const viewDisp = document.getElementById('dispositionsTableView');
+      const viewTrans = document.getElementById('transfersTableView');
+
+      if (tab === 'dispositions') {
+        btnDisp.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-blue-600 text-white shadow-2xs";
+        btnTrans.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700";
+        viewDisp.classList.remove('hidden');
+        viewTrans.classList.add('hidden');
+      } else {
+        btnTrans.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-purple-600 text-white shadow-2xs";
+        btnDisp.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700";
+        viewTrans.classList.remove('hidden');
+        viewDisp.classList.add('hidden');
+      }
+
+      filterModalData();
+    }
+
+    // Filter and Render Data within Modal
+    function filterModalData() {
+      const query = document.getElementById('modalSearchInput').value.trim().toLowerCase();
+
+      // Filter by year
+      let dispList = (modalYear === 'all')
+        ? dispositionsData 
+        : dispositionsData.filter(d => d.year === modalYear);
+      
+      let transList = (modalYear === 'all')
+        ? transfersData 
+        : transfersData.filter(d => d.year === modalYear);
+
+      // Update Tab Badges
+      document.getElementById('tabCountDispositions').textContent = `${dispList.length}건`;
+      document.getElementById('tabCountTransfers').textContent = `${transList.length}건`;
+
+      // Render Summary Stats in Modal
+      renderModalStats(dispList, transList);
+
+      // Search Query Filtering
+      if (query) {
+        dispList = dispList.filter(d => 
+          d.vehicleNo.toLowerCase().includes(query) ||
+          d.name.toLowerCase().includes(query) ||
+          d.disposition.toLowerCase().includes(query) ||
+          d.date.toLowerCase().includes(query)
+        );
+        transList = transList.filter(d => 
+          d.vehicleNo.toLowerCase().includes(query) ||
+          d.authority.toLowerCase().includes(query) ||
+          d.violation.toLowerCase().includes(query) ||
+          d.date.toLowerCase().includes(query)
+        );
+      }
+
+      // Render Dispositions Table Body
+      const dispTbody = document.getElementById('dispositionsTableBody');
+      const dispTfoot = document.getElementById('dispositionsTableFoot');
+      dispTbody.innerHTML = '';
+
+      if (dispList.length === 0) {
+        dispTfoot.innerHTML = '';
+      } else {
+        let totalAmt = 0;
+        dispList.forEach((row, idx) => {
+          totalAmt += row.amount;
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-colors";
+          tr.innerHTML = `
+            <td class="py-2.5 px-3 text-center text-slate-400 font-mono text-[11px]">${idx + 1}</td>
+            <td class="py-2.5 px-3 font-bold text-slate-900 dark:text-white font-mono">${row.vehicleNo}</td>
+            <td class="py-2.5 px-3 font-semibold text-slate-800 dark:text-slate-200">${row.name}</td>
+            <td class="py-2.5 px-3">
+              <span class="px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 font-medium text-[11px]">
+                ${row.disposition}
+              </span>
+            </td>
+            <td class="py-2.5 px-3 text-right font-bold text-blue-600 dark:text-blue-400">
+              ${formatCurrency(row.amount)}원
+            </td>
+            <td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-[11px]">
+              ${row.law}
+            </td>
+            <td class="py-2.5 px-3 text-center text-slate-500 dark:text-slate-400 font-mono text-[11px]">
+              ${row.date}
+            </td>
+          `;
+          dispTbody.appendChild(tr);
+        });
+
+        dispTfoot.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-3 px-4 text-slate-700 dark:text-slate-300">합계 (조회된 내역 ${dispList.length}건)</td>
+            <td class="py-3 px-3 text-right text-blue-700 dark:text-blue-300 font-extrabold text-sm">${formatCurrency(totalAmt)}원</td>
+            <td colspan="2" class="py-3 px-3 text-right text-slate-500 text-[11px]">환수 부과 완료</td>
+          </tr>
+        `;
+      }
+
+      // Render Transfers Table Body
+      const transTbody = document.getElementById('transfersTableBody');
+      const transTfoot = document.getElementById('transfersTableFoot');
+      transTbody.innerHTML = '';
+
+      if (transList.length === 0) {
+        transTfoot.innerHTML = '';
+      } else {
+        transList.forEach((row, idx) => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-purple-50/40 dark:hover:bg-purple-950/20 transition-colors";
+          tr.innerHTML = `
+            <td class="py-2.5 px-3 text-center text-slate-400 font-mono text-[11px]">${idx + 1}</td>
+            <td class="py-2.5 px-3 font-bold text-slate-900 dark:text-white font-mono">${row.vehicleNo}</td>
+            <td class="py-2.5 px-3 text-center">
+              <span class="px-2 py-0.5 rounded-full ${row.violation.includes('기름통') ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300' : 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'} font-semibold text-[11px]">
+                ${row.violation}
+              </span>
+            </td>
+            <td class="py-2.5 px-3 font-semibold text-slate-800 dark:text-slate-200">
+              <i class="fa-solid fa-location-dot text-slate-400 mr-1 text-[10px]"></i>${row.authority}
+            </td>
+            <td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-[11px]">
+              ${row.law}
+            </td>
+            <td class="py-2.5 px-3 text-center text-slate-600 dark:text-slate-300 font-mono text-[11px]">
+              ${row.date}
+            </td>
+            <td class="py-2.5 px-3 text-center text-slate-500 dark:text-slate-400 text-[11px]">
+              ${row.note || '-'}
+            </td>
+          `;
+          transTbody.appendChild(tr);
+        });
+
+        transTfoot.innerHTML = `
+          <tr>
+            <td colspan="3" class="py-3 px-4 text-slate-700 dark:text-slate-300">합계 (타 관청 이첩 ${transList.length}건)</td>
+            <td colspan="4" class="py-3 px-3 text-right text-purple-700 dark:text-purple-300 font-bold">
+              관할 시·군·구 행정처분 이첩 완료
+            </td>
+          </tr>
+        `;
+      }
+
+      // Empty State Display
+      const emptyNotice = document.getElementById('emptyNotice');
+      if (currentModalTab === 'dispositions' && dispList.length === 0) {
+        emptyNotice.classList.remove('hidden');
+      } else if (currentModalTab === 'transfers' && transList.length === 0) {
+        emptyNotice.classList.remove('hidden');
+      } else {
+        emptyNotice.classList.add('hidden');
+      }
+    }
+
+    // Render Modal Summary Stat Cards
+    function renderModalStats(dispList, transList) {
+      const container = document.getElementById('modalSummaryStats');
+      const totalAmount = dispList.reduce((acc, cur) => acc + cur.amount, 0);
+
+      container.innerHTML = `
+        <div class="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400">행정 처분</span>
+          <p class="text-base sm:text-lg font-extrabold text-blue-600 dark:text-blue-400">${dispList.length}건</p>
+        </div>
+        <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/50">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400">총 환수 금액</span>
+          <p class="text-base sm:text-lg font-extrabold text-emerald-600 dark:text-emerald-400">${formatCurrency(totalAmount)}원</p>
+        </div>
+        <div class="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400">타 관청 이첩</span>
+          <p class="text-base sm:text-lg font-extrabold text-purple-600 dark:text-purple-400">${transList.length}건</p>
+        </div>
+        <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/50">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400">처분 기준</span>
+          <p class="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-300 mt-0.5">전액환수 + 6개월 정지</p>
+        </div>
+      `;
+    }
+
+    function initCharts() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#94a3b8' : '#64748b';
+      const gridColor = isDark ? '#334155' : '#f1f5f9';
+
+      // 1. Trend Bar & Line Combo Chart
+      const ctxTrend = document.getElementById('trendChart').getContext('2d');
+      if (trendChartInstance) trendChartInstance.destroy();
+
+      trendChartInstance = new Chart(ctxTrend, {
+        type: 'bar',
+        data: {
+          labels: ['2024년', '2025년', '2026년'],
+          datasets: [
+            {
+              type: 'bar',
+              label: '환수금액 (원)',
+              data: [989640, 613630, 442080],
+              backgroundColor: isDark ? 'rgba(59, 130, 246, 0.75)' : 'rgba(37, 99, 235, 0.85)',
+              borderRadius: 8,
+              yAxisID: 'yRefund',
+              order: 2
+            },
+            {
+              type: 'line',
+              label: '점검 주유소 (개소)',
+              data: [1, 11, 8],
+              borderColor: '#10b981',
+              backgroundColor: '#10b981',
+              borderWidth: 3,
+              pointRadius: 6,
+              pointHoverRadius: 8,
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#10b981',
+              pointBorderWidth: 3,
+              tension: 0.25,
+              yAxisID: 'yStations',
+              order: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  if (context.dataset.yAxisID === 'yRefund') {
+                    return ` 환수금액: ${formatCurrency(context.parsed.y)}원`;
+                  }
+                  return ` 점검 주유소: ${context.parsed.y}개소`;
+                }
+              }
+            },
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: textColor, font: { family: '"Noto Sans KR"', weight: 'bold' } }
+            },
+            yRefund: {
+              type: 'linear',
+              position: 'left',
+              grid: { color: gridColor },
+              ticks: {
+                color: textColor,
+                callback: (val) => `${(val / 10000).toFixed(0)}만원`
+              }
+            },
+            yStations: {
+              type: 'linear',
+              position: 'right',
+              grid: { display: false },
+              ticks: {
+                color: '#10b981',
+                stepSize: 3,
+                callback: (val) => `${val}개소`
+              }
+            }
+          }
+        }
+      });
+
+      // 2. Inspection Type Donut Chart
+      const ctxType = document.getElementById('inspectionTypeChart').getContext('2d');
+      if (typeChartInstance) typeChartInstance.destroy();
+
+      typeChartInstance = new Chart(ctxType, {
+        type: 'doughnut',
+        data: {
+          labels: ['석유관리원 합동 (4회)', '지자체 자체 (2회)', '의심주유소 재점검 (1회)'],
+          datasets: [{
+            data: [4, 2, 1],
+            backgroundColor: ['#2563eb', '#6366f1', '#f59e0b'],
+            borderWidth: 2,
+            borderColor: isDark ? '#0f172a' : '#ffffff',
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: textColor,
+                font: { family: '"Noto Sans KR"', size: 11 },
+                boxWidth: 12,
+                padding: 12
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const val = context.raw;
+                  const total = 7;
+                  const pct = ((val / total) * 100).toFixed(1);
+                  return ` ${context.label}: ${val}회 (${pct}%)`;
+                }
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    // Toast Notification Utility
+    function showToast(message, icon = "fa-circle-check", isError = false) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMessage.textContent = message;
+      toastIcon.className = `fa-solid ${icon} ${isError ? 'text-rose-400' : 'text-emerald-400'}`;
+      
+      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // Export Master CSV
+    function exportCSVAll() {
+      try {
+        let csvContent = "\uFEFF"; // UTF-8 BOM
+        csvContent += "년도,차량번호,구분,대상자/위반사항,처분내역/관할관청,금액(원),처분/의심일자,관련법령\n";
+
+        dispositionsData.forEach(d => {
+          csvContent += `${d.year},"${d.vehicleNo}","행정처분","${d.name}","${d.disposition}",${d.amount},"${d.date}","${d.law}"\n`;
+        });
+
+        transfersData.forEach(t => {
+          csvContent += `${t.year},"${t.vehicleNo}","타관청이첩","${t.violation}","${t.authority}",0,"${t.date}","${t.law}"\n`;
+        });
+
+        downloadCSVFile(csvContent, "화물자동차_유가보조금_부정수급_점검총결산_전수대장(2024-2026).csv");
+        showToast("전체 대장 CSV 파일이 다운로드되었습니다.");
+      } catch (err) {
+        showToast("다운로드 중 오류가 발생했습니다.", "fa-circle-exclamation", true);
+      }
+    }
+
+    // Export Modal CSV
+    function exportModalCSV() {
+      try {
+        let csvContent = "\uFEFF";
+        const yrLabel = modalYear === 'all' ? '전체' : `${modalYear}년`;
+
+        if (currentModalTab === 'dispositions') {
+          csvContent += `년도,차량번호,납부자명,행정처분내역,납부금액(원),관련법령,처분일자\n`;
+          let list = (modalYear === 'all') ? dispositionsData : dispositionsData.filter(d => d.year === modalYear);
+          list.forEach(d => {
+            csvContent += `${d.year},"${d.vehicleNo}","${d.name}","${d.disposition}",${d.amount},"${d.law}","${d.date}"\n`;
+          });
+          downloadCSVFile(csvContent, `유가보조금_행정처분대장_${yrLabel}.csv`);
+        } else {
+          csvContent += `년도,차량번호,위반사항,관할관청,관련법령,부정수급의심일시,비고\n`;
+          let list = (modalYear === 'all') ? transfersData : transfersData.filter(d => d.year === modalYear);
+          list.forEach(t => {
+            csvContent += `${t.year},"${t.vehicleNo}","${t.violation}","${t.authority}","${t.law}","${t.date}","${t.note}"\n`;
+          });
+          downloadCSVFile(csvContent, `유가보조금_타관청이첩대장_${yrLabel}.csv`);
+        }
+        showToast("선택한 대장 CSV 파일이 다운로드되었습니다.");
+      } catch (err) {
+        showToast("다운로드 중 오류가 발생했습니다.", "fa-circle-exclamation", true);
+      }
+    }
+
+    function downloadCSVFile(content, fileName) {
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Theme Switcher & Keyboard Event Listeners
+    function setupTheme() {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      initCharts();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    document.getElementById('detailModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('detailModal')) closeModal();
+    });
+
+    // Window Onload Initialization
+    window.onload = function() {
+      setupTheme();
+      renderMasterTable();
+      initCharts();
+    };
+  </script>
+</body>
+</html>
