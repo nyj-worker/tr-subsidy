@@ -64,32 +64,37 @@
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 px-4 lg:px-6 py-3 shadow-xs">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
       <!-- Brand & Mobile Toggle -->
-      <div class="flex items-center gap-3">
-        <button id="mobileMenuBtn" class="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition" aria-label="조문 목록 열기">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="mobileMenuBtn" class="lg:hidden p-1.5 sm:p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition shrink-0" aria-label="조문 목록 열기">
           <i class="ph ph-list text-2xl"></i>
         </button>
-        <div class="flex items-center gap-2.5">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
-            <i class="ph ph-truck text-2xl font-bold"></i>
+        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 shrink-0">
+            <i class="ph ph-truck text-xl sm:text-2xl font-bold"></i>
           </div>
-          <div>
+          <div class="min-w-0">
             <div class="flex items-center gap-2">
-              <h1 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-none">화물자동차 유가보조금 관리 규정</h1>
-              <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">
+              <h1 class="text-sm sm:text-lg font-bold text-slate-900 tracking-tight leading-tight truncate break-keep">화물자동차 유가보조금 관리 규정</h1>
+              <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800 shrink-0">
                 국토교통부고시 제2026-384호
               </span>
             </div>
-            <p class="text-xs text-slate-500 mt-1 flex items-center gap-2">
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1 flex items-center gap-1.5 sm:gap-2 truncate">
               <span>시행 2026. 7. 16.</span>
               <span class="inline-block w-1 h-1 rounded-full bg-slate-300"></span>
-              <span class="text-slate-600">물류정책과 (044-201-3996)</span>
+              <span class="text-slate-600 truncate">물류정책과</span>
             </p>
           </div>
         </div>
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- 홈으로 이동 버튼 -->
+        <a href="index.html" class="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition border border-blue-200 shadow-2xs whitespace-nowrap shrink-0">
+          <i class="ph ph-house text-base text-blue-600"></i>
+          <span>홈으로</span>
+        </a>
         <button onclick="openModal('calculatorModal')" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition border border-slate-300">
           <i class="ph ph-calculator text-base text-blue-600"></i>
           <span>한도량 계산기</span>
@@ -1850,7 +1855,53 @@
           closeMobileDrawer();
         }
       });
+
+      // Floating Scroll-to-Top Button with Circular Progress Ring
+      (function initScrollToTop() {
+        const btn = document.getElementById('scrollToTopBtn');
+        const progressCircle = document.getElementById('scrollTopProgress');
+        if (!btn || !progressCircle) return;
+
+        const totalLength = 125.66; // 2 * PI * 20
+
+        function updateScroll() {
+          const scrollY = window.scrollY || document.documentElement.scrollTop;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+          // Auto-detect and show (> 250px)
+          if (scrollY > 250) {
+            btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3', 'scale-90');
+            btn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0', 'scale-100');
+          } else {
+            btn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0', 'scale-100');
+            btn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3', 'scale-90');
+          }
+
+          // Circular Progress
+          if (docHeight > 0) {
+            const scrollPercent = Math.min(Math.max(scrollY / docHeight, 0), 1);
+            const offset = totalLength - (scrollPercent * totalLength);
+            progressCircle.style.strokeDashoffset = offset;
+          }
+        }
+
+        window.addEventListener('scroll', updateScroll, { passive: true });
+        btn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        updateScroll();
+      })();
     });
   </script>
+
+  <!-- Scroll to Top Floating Button with Circular Progress Ring -->
+  <button id="scrollToTopBtn" aria-label="최상단으로 이동" title="맨 위로 이동" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white text-slate-700 shadow-xl border border-slate-200 flex items-center justify-center cursor-pointer transition-all duration-300 transform scale-90 opacity-0 pointer-events-none translate-y-3 hover:scale-110 hover:shadow-2xl hover:text-blue-600 group">
+    <svg class="absolute inset-0 w-12 h-12 -rotate-90 pointer-events-none" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="3" fill="none" class="text-slate-200" />
+      <circle id="scrollTopProgress" cx="24" cy="24" r="20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66" class="text-blue-600 transition-all duration-150" />
+    </svg>
+    <i class="ph ph-arrow-up text-base font-bold z-10 transition-transform group-hover:-translate-y-0.5"></i>
+  </button>
 </body>
 </html>
